@@ -1526,5 +1526,811 @@
     },
     "style_prefix": "isometric voxel game asset, chunky cubic voxels, clean 30-degree isometric camera showing the top and two sides, soft ambient occlusion in the cracks, limited flat colors per block, no smooth subdivision, no photorealism, centered subject, flat solid magenta background #FF00FF, no ground plane, no text, original design, not from any existing voxel sandbox, toy or game",
     "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "stained_glass": {
+    "title": "Stained glass",
+    "description": "Leaded stained-glass game art, jewel-tone panes, heavy black came lines, light through the glass.",
+    "pixel": false,
+    "perspective": "orthographic or slight three-quarter so the leaded panel reads clearly; front-facing for icons and UI",
+    "outline": "heavy dark lead came between panes, irregular hand-cut glass edges",
+    "light": "illuminated from behind as if in a window, jewels glowing, lead stays dark",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#0A0A0A",
+      "#1A1A1A",
+      "#3A2A18",
+      "#7A1212",
+      "#C43C3C",
+      "#D4A018",
+      "#F0E6A0",
+      "#0E3A5A",
+      "#1E6AA8",
+      "#3A8AD0",
+      "#0E4A2A",
+      "#2A8A4A",
+      "#5A1A6A",
+      "#8A3AA0",
+      "#E8DCC8",
+      "#F7F0E0"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "stained-glass game asset, leaded glass with heavy dark came lines between jewel-tone panes, hand-cut irregular glass shapes, light shining through the glass as if in a window, deep ruby, amber, sapphire and emerald, black leading, no typography, no real coat of arms, centered subject, the stained-glass object itself only, flat solid magenta background #FF00FF, no window wall, no architecture around the subject unless the subject is a building, no drop shadow, no floor, no text, original design not from any existing church, game or artist",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "chalk_crayon": {
+    "title": "Chalk crayon",
+    "description": "Soft chalk and wax-crayon marks, dusty pigment, slightly broken edges, handmade and playful.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; full-body three-quarter for characters; front for UI and icons",
+    "outline": "soft broken crayon or chalk contour, not a hard ink line",
+    "light": "implied by thicker pigment on the top-left, dusty smudge shadows",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1A1A18",
+      "#2A2A28",
+      "#8A8A82",
+      "#F4F0E4",
+      "#FFFFFF",
+      "#E85A4A",
+      "#F0A020",
+      "#F0D848",
+      "#5AAA4A",
+      "#3A8AD0",
+      "#7A5AC8",
+      "#C07040",
+      "#40B8A8",
+      "#E07AA8",
+      "#B0A090",
+      "#4A3A30"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "chalk-and-crayon game asset, soft wax crayon and dusty chalk strokes, visible pigment grain, slightly broken handmade edges, playful but readable silhouette, no photorealism, no pencil-graphite only, centered subject drawn as the object itself, flat solid magenta background #FF00FF, no chalkboard or paper sheet behind the subject, no drop shadow, no floor, no typography, original design, not in the style of a named illustrator or brand",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "art_deco_poster": {
+    "title": "Art deco poster",
+    "description": "1920s-inspired art deco poster look: geometric sunbursts, gold, black, cream and teal, no typography.",
+    "pixel": false,
+    "perspective": "strong graphic three-quarter or front elevation, poster-flat but dimensional enough to read as an object",
+    "outline": "clean geometric contours, occasional gold rule, no messy sketch lines",
+    "light": "stylized fan or stepped lighting from the top left, metallic gold highlights",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#11110E",
+      "#1A2A4A",
+      "#0E3A3A",
+      "#2A2A28",
+      "#4A0E0E",
+      "#8A1E1E",
+      "#C45A2A",
+      "#D4AF37",
+      "#A08040",
+      "#F4E4C0",
+      "#E8E0D0",
+      "#F8F4E8",
+      "#1A4A4A",
+      "#3A7A6A",
+      "#5A8A9A",
+      "#C0B8A0"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "art deco poster-inspired game asset, 1920s geometric graphic design, stepped forms, sunburst or fan motifs only when they belong to the object, gold black cream and teal, metallic gold highlights, clean poster shapes, no typography, no letters, no numbers, no real logo or real poster pastiche, original design not from any existing advertisement or artist, centered subject, flat solid magenta background #FF00FF, no poster sheet or typographic frame around the subject, no drop shadow, no floor, no text",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "ukiyo_e_inspired": {
+    "title": "Ukiyo-e inspired",
+    "description": "Original woodblock-inspired print look: flat mineral pigments, crisp outlines, not a copy of any real print or artist.",
+    "pixel": false,
+    "perspective": "slightly flattened woodblock view for objects; full-body three-quarter for characters",
+    "outline": "crisp dark woodblock contour, even but handmade",
+    "light": "flat color holds with a few bokashi-style soft blends, no realistic shading",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#111111",
+      "#1A1410",
+      "#1E3A5C",
+      "#3A5A7A",
+      "#C43C2A",
+      "#8A3A28",
+      "#4A2A1A",
+      "#2A4A32",
+      "#6A8A5A",
+      "#E8D2A8",
+      "#F7EED8",
+      "#D8C8B0",
+      "#6A1E1A",
+      "#C47A3A",
+      "#8AA0B0",
+      "#2A2018"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "ukiyo-e inspired game asset, original woodblock-print look, flat mineral pigments, crisp handmade outlines, a few soft bokashi blends, Prussian blue vermillion cream and muted green, not a copy of any existing print, artist or series, not a pastiche of a famous wave, mountain or actor print, original design only, centered subject, flat solid magenta background #FF00FF, no paper sheet or print margin around the subject, no typography, no publisher seals, no drop shadow, no floor",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "blueprint_line": {
+    "title": "Blueprint line",
+    "description": "Technical blueprint line art: white and light-cyan lines, restrained blue fills on the subject only, no typography.",
+    "pixel": false,
+    "perspective": "orthographic or clean three-quarter technical elevation, readable as a diagram of one object",
+    "outline": "even white or light-cyan technical line, occasional hidden-line dashes",
+    "light": "no realistic lighting; line weight and a single pale blue fill suggest volume",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#0A2A5A",
+      "#0E3A6E",
+      "#145A96",
+      "#1E6AA8",
+      "#7AB0D8",
+      "#D8E8F8",
+      "#F0F6FC",
+      "#FFFFFF",
+      "#F4C44A",
+      "#2A4A6A",
+      "#0A1A30",
+      "#A0C8E0"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "technical blueprint line-art game asset, white and light-cyan construction lines, restrained blue fills only inside the subject, clean orthographic or three-quarter elevation, occasional dashed hidden lines, no typography, no dimensions, no title block, no letters or numbers, centered subject, flat solid magenta background #FF00FF, no blueprint paper sheet behind the subject, no floor, no drop shadow, original design, not a plan of a real building or branded machine",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "cyberpunk_neon": {
+    "title": "Cyberpunk neon",
+    "description": "Dark wet-metal cyberpunk hardware with cyan, lime and amber neon. No pink or magenta on the subject, no brands.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; front orthographic for UI; full-body three-quarter for characters",
+    "outline": "thin cyan or amber rim light, not a cartoon outline",
+    "light": "cool cyan key, amber or lime accent, deep unlit recesses, no pink or magenta glow",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#07080D",
+      "#0A0C12",
+      "#12141C",
+      "#1C2430",
+      "#8A9AAA",
+      "#E8EEF4",
+      "#FFFFFF",
+      "#1AE0E8",
+      "#7CFF3A",
+      "#FF8A1A",
+      "#F0C030",
+      "#5A6AFF",
+      "#163A40",
+      "#2A2030",
+      "#4A5560",
+      "#0E2830"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "cyberpunk neon game asset, dark wet-metal and matte carbon surfaces, electric cyan lime and amber neon only, cool rim light, original hardware and fashion, no brand marks, no typography, no logos, the subject itself must contain no pink and no pure #FF00FF, no familiar franchise armor or skyline, centered subject, flat solid magenta background #FF00FF used only as a backdrop key, no ground plane, no photoreal cinematic fog, no text, original design not from any existing game or film",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "storybook_gouache": {
+    "title": "Storybook gouache",
+    "description": "Opaque gouache storybook painting, soft readable shapes, warm paper-like pigment, original and gentle.",
+    "pixel": false,
+    "perspective": "three-quarter view, slightly storybook proportions, grounded but no visible floor",
+    "outline": "soft painted edge, little or no hard ink line",
+    "light": "warm afternoon key from the top left, opaque gouache shadows, no airbrush haze",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1A1410",
+      "#2A1C14",
+      "#6A3A22",
+      "#D48A4A",
+      "#F0C878",
+      "#F7E8C8",
+      "#F4D0B0",
+      "#E05A4A",
+      "#E8A0A0",
+      "#3A6A4A",
+      "#7AAA62",
+      "#3A5A8A",
+      "#7A9AC8",
+      "#8A4A6A",
+      "#8A6A4A",
+      "#F8F0DC"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
+      ]
+    },
+    "style_prefix": "storybook gouache game asset, opaque gouache painting, soft readable shapes, warm pigment, gentle storybook mood, visible brush dabs, no photorealism, no watercolor blooms, original design, not in the style of a named illustrator, not from any existing children's book, centered subject, flat solid magenta background #FF00FF, no storybook page or paper around the subject, no drop shadow, no floor, no typography, no text",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "monochrome_1bit": {
+    "title": "Monochrome 1-bit",
+    "description": "Strict 1-bit black-and-white pixel art, chunky clusters, no midtones, no dither unless a 2-pixel checker is required.",
+    "pixel": true,
+    "perspective": "three-quarter top-down for items and tiles; side-view full body for characters and enemies",
+    "outline": "1-pixel black silhouette edge, no anti-aliasing, crisp square pixels",
+    "light": "top-left, suggested only by black vs white shapes, no grey midtones",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#0D0D0D",
+      "#F5F0E6"
+    ],
+    "sizes": {
+      "icons": [
+        32,
+        32
+      ],
+      "tiles": [
+        16,
+        16
+      ],
+      "props": [
+        32,
+        32
+      ],
+      "characters": [
+        32,
+        48
+      ],
+      "enemies": [
+        32,
+        32
+      ],
+      "ui": [
+        32,
+        32
+      ],
+      "vfx": [
+        32,
+        32
+      ],
+      "backgrounds": [
+        256,
+        144
+      ],
+      "vehicles": [
+        48,
+        32
+      ],
+      "buildings": [
+        64,
+        64
+      ],
+      "furniture": [
+        32,
+        32
+      ],
+      "foliage": [
+        32,
+        48
+      ],
+      "creatures": [
+        32,
+        32
+      ],
+      "portraits": [
+        32,
+        32
+      ],
+      "weapons": [
+        32,
+        48
+      ],
+      "decals": [
+        32,
+        32
+      ],
+      "markers": [
+        32,
+        32
+      ],
+      "terrain": [
+        64,
+        64
+      ]
+    },
+    "style_prefix": "strict 1-bit monochrome pixel art game asset, only two colors, chunky clustered square pixels, no anti-aliasing, no blur, no greys, no gradients, no midtones, dither only as a simple 2-pixel checker if needed, limited 2-color palette #0D0D0D #F5F0E6, lighting from the top left suggested only by those two colors, centered subject, flat solid magenta background #FF00FF used only as a backdrop key and not as a sprite color, no drop shadow, no floor, no ground plane, no text, original design not from any existing game or handheld library",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
   }
 }

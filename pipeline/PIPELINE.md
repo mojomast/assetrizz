@@ -37,7 +37,7 @@ Leases last 30 minutes and are reclaimed if a worker dies. Do not change `--shar
   RESEARCH.md          why the pipeline looks like this (with sources)
   README.md            this file
   LICENSE.txt
-  style_packs.json     locked style prefixes + palettes + sizes (15 packs)
+  style_packs.json     locked style prefixes + palettes + sizes (23 packs)
   taxonomy.json        counts and shard rule (written by build_specs.py)
   specs.jsonl          one record per asset specification
   prompts.jsonl        one record per generation job (sheet or single)
@@ -52,6 +52,7 @@ Leases last 30 minutes and are reclaimed if a worker dies. Do not change `--shar
   work/shard-N/        per-worker staging (raw/, queue.jsonl, NEXT.md)
   build_specs.py       (re)build the queue if the DB has no batches yet
   append_styles.py     append new style packs to a live queue (does not touch existing rows)
+  append_styles_wave3.py  append the third style wave across all 18 categories (does not touch existing rows)
   append_categories.py append new categories to a live queue (does not touch existing rows)
   worker.py            claim + ingest entry point
   ingest.py            ingest only
@@ -79,6 +80,14 @@ Leases last 30 minutes and are reclaimed if a worker dies. Do not change `--shar
 | `vaporwave_synth` | chrome + sunset peach + electric cyan, pink is not #FF00FF | icons 256, characters 512×768 |
 | `gothic_woodcut` | medieval engraving, dense hatch on cream | icons 256, characters 512×768 |
 | `isometric_voxel` | chunky cubic voxels, 30° isometric | icons 256, characters 512×768 |
+| `stained_glass` | leaded jewel-tone glass, heavy black came | icons 256, characters 512×768 |
+| `chalk_crayon` | dusty chalk and wax crayon, handmade edges | icons 256, characters 512×768 |
+| `art_deco_poster` | 1920s geometric gold, black, cream and teal, no type | icons 256, characters 512×768 |
+| `ukiyo_e_inspired` | original woodblock look, not a copy of any print | icons 256, characters 512×768 |
+| `blueprint_line` | white/cyan technical lines, no typography or title block | icons 256, characters 512×768 |
+| `cyberpunk_neon` | dark metal with cyan, lime and amber neon, no pink, no brands | icons 256, characters 512×768 |
+| `storybook_gouache` | opaque gouache storybook painting, original, no named illustrator | icons 256, characters 512×768 |
+| `monochrome_1bit` | strict 2-color 1-bit pixel (not a handheld library) | tiles 16, icons 32, characters 32×48 |
 
 Each pack locks a `style_prefix`, palette, light direction, and chroma key (`#FF00FF`).
 

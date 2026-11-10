@@ -220,6 +220,22 @@ def tags_for(category, subcategory, subject, variant, style, w, h, tileable) -> 
         tags += ["woodcut", "engraving", "gothic", "hatch"]
     if style == "isometric_voxel":
         tags += ["voxel", "isometric", "blocky"]
+    if style == "stained_glass":
+        tags += ["stained-glass", "leaded", "jewel"]
+    if style == "chalk_crayon":
+        tags += ["chalk", "crayon", "pastel"]
+    if style == "art_deco_poster":
+        tags += ["art-deco", "deco", "poster"]
+    if style == "ukiyo_e_inspired":
+        tags += ["ukiyo-e-inspired", "woodblock"]
+    if style == "blueprint_line":
+        tags += ["blueprint", "technical", "line-art"]
+    if style == "cyberpunk_neon":
+        tags += ["cyberpunk", "neon"]
+    if style == "storybook_gouache":
+        tags += ["gouache", "storybook"]
+    if style == "monochrome_1bit" or "1bit" in style:
+        tags += ["pixelart", "pixel", "1-bit", "monochrome"]
     if tileable:
         tags += ["tileable", "seamless", "tile"]
     if category == "tiles":

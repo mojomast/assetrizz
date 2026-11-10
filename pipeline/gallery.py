@@ -505,7 +505,7 @@ HTML = r"""<!DOCTYPE html>
   let openId = null;
 
   const fmt = (n) => Number(n||0).toLocaleString("en-US");
-  const isPixel = (a) => { const s=a.style_pack||""; return s.startsWith("pixel") || s.includes("8bit") || (a.width||0) <= 64; };
+  const isPixel = (a) => { const s=a.style_pack||""; return s.startsWith("pixel") || s.includes("8bit") || s.includes("1bit") || (a.width||0) <= 64; };
   const params = () => {
     const p = new URLSearchParams();
     if (qEl.value.trim()) p.set("q", qEl.value.trim());
