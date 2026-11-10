@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-assetrizz"
+version = "0.1.0"
+description = "Assetrizz Hermes plugin: search a local 2D game-asset library and compose scenes."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Kyle Durepos" }]
+keywords = ["hermes", "assetrizz", "assets", "sprites", "plugin"]
+dependencies = [
+  "pillow>=10,<14",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<10",
+  "pyyaml>=6,<7",
+  "ruamel.yaml>=0.18,<0.19",
+  "tiktoken>=0.7,<1",
+  "fastapi>=0.110,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/mojomast/assetrizz"
+
+[tool.setuptools.packages.find]
+include = ["assetrizz_plugin*"]
+exclude = ["tests*", "docs*", "evals*"]
+
+[tool.pytest.ini_options]
+testpaths = ["../tests"]

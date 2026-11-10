@@ -1,0 +1,8 @@
+{
+  "name": "assetrizz",
+  "label": "Assetrizz",
+  "description": "Search the assetrizz library and live-preview the scene the agent is composing. The Desktop pane talks only through ctx.rest.",
+  "icon": "Image",
+  "version": "0.1.0",
+  "api": "plugin_api.py"
+}

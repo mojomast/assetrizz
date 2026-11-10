@@ -1,0 +1,98 @@
+{
+  "total_count": 14641,
+  "total_bytes": 1635530313,
+  "packs": {
+    "art_deco_poster": {
+      "count": 411,
+      "bytes": 51537995
+    },
+    "blueprint_line": {
+      "count": 411,
+      "bytes": 35824434
+    },
+    "cel_shaded_anime": {
+      "count": 677,
+      "bytes": 94052849
+    },
+    "chalk_crayon": {
+      "count": 548,
+      "bytes": 64962588
+    },
+    "claymation": {
+      "count": 647,
+      "bytes": 96332080
+    },
+    "cozy_cartoon": {
+      "count": 854,
+      "bytes": 117595579
+    },
+    "cyberpunk_neon": {
+      "count": 372,
+      "bytes": 46865088
+    },
+    "dark_scifi": {
+      "count": 883,
+      "bytes": 104303345
+    },
+    "flat_vector_ui": {
+      "count": 937,
+      "bytes": 71194881
+    },
+    "gothic_woodcut": {
+      "count": 608,
+      "bytes": 142605027
+    },
+    "hand_painted_fantasy": {
+      "count": 849,
+      "bytes": 138355929
+    },
+    "ink_watercolor": {
+      "count": 613,
+      "bytes": 120262961
+    },
+    "isometric_voxel": {
+      "count": 568,
+      "bytes": 81609288
+    },
+    "lowpoly_render": {
+      "count": 868,
+      "bytes": 96533675
+    },
+    "monochrome_1bit": {
+      "count": 487,
+      "bytes": 270050
+    },
+    "paper_cutout": {
+      "count": 500,
+      "bytes": 87574666
+    },
+    "pixel_16bit": {
+      "count": 882,
+      "bytes": 1507600
+    },
+    "pixel_32": {
+      "count": 872,
+      "bytes": 3831039
+    },
+    "retro_8bit": {
+      "count": 518,
+      "bytes": 408251
+    },
+    "stained_glass": {
+      "count": 591,
+      "bytes": 90072003
+    },
+    "storybook_gouache": {
+      "count": 489,
+      "bytes": 58169287
+    },
+    "ukiyo_e_inspired": {
+      "count": 420,
+      "bytes": 49124324
+    },
+    "vaporwave_synth": {
+      "count": 636,
+      "bytes": 82537374
+    }
+  }
+}

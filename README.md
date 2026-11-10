@@ -17,6 +17,7 @@ Every image is original, generated for Kyle Durepos, and tagged for search. No r
 - [What's inside](#whats-inside)
 - [Style gallery](#style-gallery)
 - [Quick start: use the assets](#quick-start-use-the-assets)
+- [Hermes plugin: search and compose](#hermes-plugin-search-and-compose)
 - [Generate your own: the pipeline](#generate-your-own-the-pipeline)
 - [Adding styles and categories](#adding-styles-and-categories)
 - [Asset metadata](#asset-metadata)
@@ -37,6 +38,7 @@ Every image is original, generated for Kyle Durepos, and tagged for search. No r
 assetrizz/
 ├── README.md
 ├── docs/banner.jpg
+├── docs/example-scene.png      # composed sample (see the Hermes plugin)
 ├── assets/
 │   ├── manifest.jsonl          # one JSON object per accepted asset
 │   ├── stats.json              # counts by style and category
@@ -45,6 +47,7 @@ assetrizz/
 ├── db/
 │   ├── assets.db.xz            # compressed catalog (4.7 MB)
 │   └── restore.sh              # writes db/assets.db (gitignored)
+├── plugin/                     # installable Hermes plugin (not the 14,641 PNGs)
 └── pipeline/                   # style packs, queue, ingest, search, gallery
     ├── style_packs.json
     ├── PIPELINE.md
@@ -185,6 +188,34 @@ jq -r 'select(.style_pack=="stained_glass") | [.category,.subject,.path] | @tsv'
 
 The `pipeline/query.py` and `pipeline/serve.py` CLIs talk to a database file next to the scripts (`pipeline/assets.db`) and were written for the live working tree. For this repo, prefer the restored `db/assets.db` or the manifest, as in the examples above. `query.py --category` currently accepts the original eight categories: `icons`, `tiles`, `props`, `characters`, `enemies`, `ui`, `vfx`, `backgrounds`. The other ten categories are fully present in the catalog and can be filtered with SQL (`category = 'portraits'`) or `jq`.
 
+
+## Hermes plugin: search and compose
+
+The [`plugin/`](plugin/) directory is a native Hermes plugin. The agent searches the catalog and composes scenes; you can watch the current scene in a dark Desktop pane. A 4.7 MB compressed catalog is bundled, so search works after installing `plugin/` alone.
+
+Install **only** that directory — a root install is refused so Hermes does not copy the 1.65 GB asset tree into the plugins folder:
+
+```bash
+hermes plugins install mojomast/assetrizz/plugin
+```
+
+**Asset modes:** `on_demand` (default) fetches a single pinned, SHA-256-verified PNG from GitHub raw when you place, render, or preview it; `local` uses a library you download once (full tree or chosen style packs) into a directory you pick; `offline` never touches the network and needs the file on disk. Bulk downloads are user-initiated only — click **Download library** in the pane (size estimate, progress, cancel) or run `python -m assetrizz_plugin.cli`. That is not a model tool. Optional `library_path` / `ASSETRIZZ_LIBRARY` still prefers a complete checkout when you already have one.
+
+Tools:
+
+- `assetrizz_search` — `op=search`, `op=get`, `op=stats` (FTS over slugs, tags, descriptions, styles, categories)
+- `assetrizz_scene` — `op=create`, `place`, `tile`, `move`, `scale`, `flip`, `layer`, `remove`, `list`, `clear`, `render`, `save`, `load`
+
+Skill id for `skill_view`: `assetrizz:assetrizz-composer`. Hermes `>=0.23.0` is required for the pane (`ctx.rest`). The two tools still run when the pane is unavailable. Render writes a PNG under the plugin data / export directory; the tool result is a path, not an embedded image.
+
+An example scene composed from real `pixel_32` tiles, trees, a roadside inn, a ranger, and a hare:
+
+<p align="center">
+  <img src="docs/example-scene.png" alt="Example assetrizz scene: a pixel_32 meadow path with an inn, trees, a ranger and a hare" width="640">
+</p>
+
+Full install notes, disclosure, and developer commands are in [`plugin/README.md`](plugin/README.md). Scene JSON for the example is at [`docs/example-scene.json`](docs/example-scene.json).
+
 ## Generate your own: the pipeline
 
 The generator lives in `pipeline/`. A longer walkthrough is in [`pipeline/PIPELINE.md`](pipeline/PIPELINE.md). In the live working tree the database sat beside the scripts and accepted files were written under `library/`; this repository ships the accepted library under `assets/` and the catalog under `db/`.
@@ -272,8 +303,8 @@ The database also stores prompt, negative, style prefix, thumbnail path, phash, 
 
 ## Roadmap
 
-- [ ] **Hermes plugin** — `plugin.yaml` plus `register(ctx)` tools for searching, fetching and generating assets *(planned)*
-- [ ] Dashboard pane for browsing the gallery *(planned)*
+- [x] **Hermes plugin** — `plugin/` with `assetrizz_search` and `assetrizz_scene`, a dark compose pane, and a catalog-ready layout *(on `feat/hermes-plugin`; not catalog-submitted yet)*
+- [ ] Live verification on a Hermes Desktop host, then an authorized catalog pin
 - [ ] Release-hosted asset packs *(planned)*
 
 ## License and originality
