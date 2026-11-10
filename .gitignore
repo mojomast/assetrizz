@@ -1,5 +1,9 @@
+# SQLite databases and sidecars (the shipped catalog is db/assets.db.xz)
 *.db
 *.db-*
+db/assets.db
+
+# Pipeline runtime / local working trees
 library/
 thumbs/
 raw/
@@ -7,10 +11,13 @@ rejected/
 work/
 logs/
 backups/
-contact_sheets/
-manifest.jsonl
+
+# Root-level generated exports (tracked copies live under assets/)
+/contact_sheets/
+/manifest.jsonl
 specs.jsonl
 prompts.jsonl
 PROGRESS.json
+
 __pycache__/
 .env
