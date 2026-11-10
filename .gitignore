@@ -1,0 +1,16 @@
+*.db
+*.db-*
+library/
+thumbs/
+raw/
+rejected/
+work/
+logs/
+backups/
+contact_sheets/
+manifest.jsonl
+specs.jsonl
+prompts.jsonl
+PROGRESS.json
+__pycache__/
+.env

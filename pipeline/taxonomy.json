@@ -1,0 +1,60 @@
+{
+  "style_packs": [
+    "pixel_16bit",
+    "pixel_32",
+    "hand_painted_fantasy",
+    "flat_vector_ui",
+    "lowpoly_render",
+    "dark_scifi",
+    "cozy_cartoon",
+    "ink_watercolor",
+    "paper_cutout",
+    "claymation",
+    "cel_shaded_anime",
+    "retro_8bit",
+    "vaporwave_synth",
+    "gothic_woodcut",
+    "isometric_voxel"
+  ],
+  "counts": {
+    "specs": 8221,
+    "batches": 2502,
+    "by_category": {
+      "backgrounds": 524,
+      "characters": 1016,
+      "enemies": 804,
+      "icons": 2913,
+      "props": 416,
+      "tiles": 1088,
+      "ui": 508,
+      "vfx": 952
+    },
+    "by_style": {
+      "pixel_16bit": 683,
+      "pixel_32": 683,
+      "hand_painted_fantasy": 683,
+      "flat_vector_ui": 683,
+      "lowpoly_render": 683,
+      "dark_scifi": 683,
+      "cozy_cartoon": 683,
+      "ink_watercolor": 430,
+      "paper_cutout": 430,
+      "claymation": 430,
+      "cel_shaded_anime": 430,
+      "retro_8bit": 430,
+      "vaporwave_synth": 430,
+      "gothic_woodcut": 430,
+      "isometric_voxel": 430
+    },
+    "by_kind": {
+      "background": 524,
+      "sheet": 324,
+      "single": 74,
+      "tile": 1088,
+      "turnaround": 254,
+      "vfx": 238
+    }
+  },
+  "shard_rule": "A worker started with --shard N --shards S claims pending batches where COALESCE(queue_pos, batch_index) % S == N.",
+  "default_shards": 4
+}

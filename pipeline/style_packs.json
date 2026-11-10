@@ -1,0 +1,930 @@
+{
+  "pixel_16bit": {
+    "title": "16-bit pixel",
+    "description": "SNES-era pixel art, 16-color DawnBringer-like palette, hard 1px outlines, 16px tiles and 32px icons.",
+    "pixel": true,
+    "perspective": "three-quarter top-down for items and tiles; side-view full body for characters and enemies",
+    "outline": "1-pixel dark outline, no anti-aliasing, crisp square pixels",
+    "light": "top-left, one highlight and one shadow tone per color",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#140C1C",
+      "#442434",
+      "#30346D",
+      "#4E4A4E",
+      "#854C30",
+      "#346524",
+      "#D04648",
+      "#757161",
+      "#597DCE",
+      "#D27D2C",
+      "#8595A1",
+      "#6DAA2C",
+      "#D2AA99",
+      "#6DC2CA",
+      "#DAD45E",
+      "#DEEED6"
+    ],
+    "sizes": {
+      "icons": [
+        32,
+        32
+      ],
+      "tiles": [
+        16,
+        16
+      ],
+      "props": [
+        32,
+        32
+      ],
+      "characters": [
+        32,
+        48
+      ],
+      "enemies": [
+        32,
+        32
+      ],
+      "ui": [
+        32,
+        32
+      ],
+      "vfx": [
+        32,
+        32
+      ],
+      "backgrounds": [
+        256,
+        144
+      ]
+    },
+    "style_prefix": "16-bit SNES-era pixel art game asset, crisp square pixels, 1-pixel dark outline, no anti-aliasing, no blur, no gradients, limited 16-color palette #140C1C #442434 #30346D #4E4A4E #854C30 #346524 #D04648 #757161 #597DCE #D27D2C #8595A1 #6DAA2C #D2AA99 #6DC2CA #DAD45E #DEEED6, lighting from the top left, one highlight and one shadow per color, centered subject, flat solid magenta background #FF00FF, no drop shadow, no floor, no ground plane, no text, original design not from any existing game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "pixel_32": {
+    "title": "32px pixel",
+    "description": "Richer 32-color pixel art, 32px tiles and 64px icons/characters, still hard-edged and grid-snapped.",
+    "pixel": true,
+    "perspective": "three-quarter top-down for items and tiles; side-view full body for characters and enemies",
+    "outline": "1-pixel dark outline, no anti-aliasing, crisp square pixels",
+    "light": "top-left, two-step shading",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#000000",
+      "#222034",
+      "#45283C",
+      "#663931",
+      "#8F563B",
+      "#DF7126",
+      "#D9A066",
+      "#EEC39A",
+      "#FBF236",
+      "#99E550",
+      "#6ABE30",
+      "#37946E",
+      "#4B692F",
+      "#524B24",
+      "#323C39",
+      "#3F3F74",
+      "#306082",
+      "#5B6EE1",
+      "#639BFF",
+      "#5FCDE4",
+      "#CBDBFC",
+      "#FFFFFF",
+      "#9BADB7",
+      "#847E87",
+      "#696A6A",
+      "#595652",
+      "#76428A",
+      "#AC3232",
+      "#D95763",
+      "#D77BBA",
+      "#8F974A",
+      "#8A6F30"
+    ],
+    "sizes": {
+      "icons": [
+        64,
+        64
+      ],
+      "tiles": [
+        32,
+        32
+      ],
+      "props": [
+        64,
+        64
+      ],
+      "characters": [
+        64,
+        96
+      ],
+      "enemies": [
+        64,
+        64
+      ],
+      "ui": [
+        64,
+        64
+      ],
+      "vfx": [
+        64,
+        64
+      ],
+      "backgrounds": [
+        384,
+        216
+      ]
+    },
+    "style_prefix": "32-pixel-grid pixel art game asset, crisp square pixels, 1-pixel dark outline, no anti-aliasing, no blur, limited 32-color DawnBringer-style palette, lighting from the top left, clean clusters of pixels, centered subject, flat solid magenta background #FF00FF, no drop shadow, no floor, no text, original design not from any existing game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "hand_painted_fantasy": {
+    "title": "Hand-painted fantasy",
+    "description": "Painterly high-fantasy props and icons, saturated oils, soft readable shapes.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; full-body three-quarter for characters",
+    "outline": "no hard pixel outline; slight painted edge darkening is ok",
+    "light": "warm key from top-left, soft painted shadow",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1A120B",
+      "#3B2414",
+      "#6B3A1F",
+      "#A85B2B",
+      "#D4A056",
+      "#F0E2B6",
+      "#2C4A3A",
+      "#4F7A4E",
+      "#8BBF6A",
+      "#1E2E4A",
+      "#3E5C8A",
+      "#7EA0C8",
+      "#6B1D1D",
+      "#C43C3C",
+      "#E8D9C4",
+      "#8A7A6A"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "hand-painted fantasy game art, oil-painted texture, saturated but controlled colors, readable silhouette, warm light from the top left, slightly weathered materials, centered subject filling most of the frame, flat solid magenta background #FF00FF, no drop shadow under the subject, no photorealism, no text, original fantasy design not from any existing game or artist",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "flat_vector_ui": {
+    "title": "Flat vector UI",
+    "description": "Clean geometric UI and icons, even fills, consistent corner radius and stroke.",
+    "pixel": false,
+    "perspective": "orthographic front view, UI/icon facing camera",
+    "outline": "2px even dark stroke or no stroke on filled shapes; consistent across the set",
+    "light": "flat or a single soft top highlight, no realistic shading",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1B1F2A",
+      "#2E3548",
+      "#4A5570",
+      "#E8ECF4",
+      "#FFFFFF",
+      "#3D7CFF",
+      "#2EC4B6",
+      "#F4D35E",
+      "#EE6C4D",
+      "#8B5CF6",
+      "#94A3B8",
+      "#0F172A"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        256,
+        256
+      ],
+      "characters": [
+        256,
+        384
+      ],
+      "enemies": [
+        256,
+        256
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        256,
+        256
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "flat vector game UI asset, clean geometric shapes, even color fills, consistent rounded corners, subtle 2px dark stroke, no gradients except a single soft top highlight, no texture noise, no skeuomorphism, centered subject, flat solid magenta background #FF00FF, no drop shadow, no text unless the subject is a blank button shape, original design",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "lowpoly_render": {
+    "title": "Low-poly render look",
+    "description": "Faceted low-poly 3D rendered on a studio backdrop, soft ambient occlusion, clean materials.",
+    "pixel": false,
+    "perspective": "three-quarter studio view, slight downward camera, object centered on a hidden ground",
+    "outline": "none; faceted geometric edges only",
+    "light": "soft studio three-point, gentle ambient occlusion in creases",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#2B2F36",
+      "#5A6170",
+      "#A7B0BE",
+      "#F2F4F8",
+      "#E07A3D",
+      "#F0C36A",
+      "#3C8D6E",
+      "#2F6FED",
+      "#D14D4D",
+      "#8B6B4F",
+      "#C0D6E8"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "low-poly 3D rendered game asset, faceted geometry, clean PBR-like materials, soft studio lighting, gentle ambient occlusion, no subdivision smoothness, centered subject, flat solid magenta background #FF00FF, no ground plane visible, no photorealism, no text, original design not from any existing game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "dark_scifi": {
+    "title": "Dark sci-fi",
+    "description": "Dark metallic hardware with restrained neon accents, HUD-adjacent but still object-based.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; front orthographic for UI",
+    "outline": "thin rim light, not a cartoon outline",
+    "light": "cool rim from the right, dim key from top-left, neon emissive accents only",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#070B12",
+      "#101826",
+      "#1C2A3A",
+      "#334155",
+      "#94A3B8",
+      "#E2E8F0",
+      "#22D3EE",
+      "#38BDF8",
+      "#6366F1",
+      "#22C55E",
+      "#F43F5E",
+      "#F59E0B"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "dark sci-fi game asset, matte black and gunmetal surfaces, restrained cyan and violet neon accents, subtle panel lines, cool rim light, centered subject, flat solid magenta background #FF00FF, no floor, no photoreal cinematic fog, no text, no logos, original design not from any existing franchise",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "cozy_cartoon": {
+    "title": "Cozy cartoon",
+    "description": "Warm rounded cartoon, soft outlines, cottagecore colors, friendly read at icon size.",
+    "pixel": false,
+    "perspective": "three-quarter view, slightly cute proportions, grounded but no visible floor",
+    "outline": "soft 3px rounded dark-brown outline",
+    "light": "warm afternoon light from top-left, soft blush shadows",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#3B2A22",
+      "#7A4E3A",
+      "#C9895A",
+      "#F3D7B5",
+      "#F7E7C6",
+      "#E8A0A0",
+      "#E07A5F",
+      "#81B29A",
+      "#3D5A4C",
+      "#F2CC8F",
+      "#8E6C4A",
+      "#6B8FBF"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "cozy cartoon game asset, warm cottagecore colors, soft rounded shapes, gentle 3px dark-brown outline, simple cute shading, afternoon light from the top left, centered subject, flat solid magenta background #FF00FF, no floor, no text, wholesome original design, not a copyrighted character",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "ink_watercolor": {
+    "title": "Ink watercolor",
+    "description": "Sumi-e ink wash with soft mineral watercolor blooms, paper tooth in the subject, spare and graphic.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; full-body three-quarter for characters",
+    "outline": "calligraphic black ink edge, slightly irregular brush width; no hard pixel outline",
+    "light": "soft diffused wash, faint wet-edge shadow toward the bottom-right",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1A1410",
+      "#2C241C",
+      "#5A3A28",
+      "#8C5A32",
+      "#C9A36A",
+      "#F0E4C8",
+      "#1E2A4A",
+      "#3D5A8A",
+      "#7A9BB8",
+      "#6B1E1A",
+      "#C45C3A",
+      "#2F4A32",
+      "#6E8A5A",
+      "#8A7A6A",
+      "#D8C8B0",
+      "#F7F1E4"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "sumi-e ink-and-watercolor game asset, original ink-wash design not copied from any artist, bold black calligraphic brush strokes, soft mineral watercolor blooms in indigo, vermillion and moss, visible cold-press paper tooth only on the subject itself, limited muted palette, spare uncluttered composition, not an oil painting, centered subject, flat solid magenta background #FF00FF, no paper sheet behind the subject, no drop shadow, no floor, no ground plane, no text, original design not from any existing game or artist",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "paper_cutout": {
+    "title": "Paper cutout",
+    "description": "Layered construction-paper craft, stacked offset sheets, visible thickness, matte fibers, scissor-cut silhouettes.",
+    "pixel": false,
+    "perspective": "slight three-quarter so paper layers read as stacked; front-facing for UI and icons",
+    "outline": "clean scissor-cut or deckled paper edge, no ink outline",
+    "light": "soft craft-lamp from the top left; tiny contact shadow only between stacked paper layers, none on the backdrop",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#2B1D14",
+      "#6B3A22",
+      "#C46A2E",
+      "#E8B84A",
+      "#F3E2C0",
+      "#F7F0E4",
+      "#7A1F1F",
+      "#D24A3A",
+      "#1E3A5F",
+      "#3E6FA8",
+      "#2C5A3A",
+      "#6A9A62",
+      "#5A3A6A",
+      "#8A6B4A",
+      "#9AA3A8",
+      "#1A1A1A"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "layered paper-cutout craft game asset, stacked sheets of colored construction paper, visible layer thickness and slight offset between layers, matte paper fiber texture, clean scissor-cut silhouettes, handmade but tidy, no photorealism, no plastic 3D render, centered subject, flat solid magenta background #FF00FF, no floor, no table, no drop shadow on the backdrop, no text, original design not from any existing craft kit, book or game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "claymation": {
+    "title": "Claymation",
+    "description": "Soft matte plasticine clay, subtle fingerprints and tool marks, handmade stop-motion volumes.",
+    "pixel": false,
+    "perspective": "three-quarter studio view for objects; full-body three-quarter for characters",
+    "outline": "none; soft clay silhouette only",
+    "light": "gentle stop-motion key from the top left, soft fill, matte clay with very little specular",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#2A1C16",
+      "#5A3324",
+      "#A85A32",
+      "#E09A5A",
+      "#F0D2A0",
+      "#F7EDE0",
+      "#8C1E1E",
+      "#D45A3A",
+      "#E8C04A",
+      "#2E5A3A",
+      "#6AA05A",
+      "#1E3A5A",
+      "#4A7AA8",
+      "#5A3A6A",
+      "#8A8A8A",
+      "#F2F2EA"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "claymation stop-motion game asset, soft matte plasticine clay with subtle fingerprints and tool marks, slightly imperfect handmade volumes, gentle studio light from the top left, no greasy shine, no smooth CGI, centered subject, flat solid magenta background #FF00FF, no ground plane, no animation set, no text, original design, not a character from any existing film, show or game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "cel_shaded_anime": {
+    "title": "Cel-shaded anime",
+    "description": "Generic original cel-shaded look: thin even outlines, hard color holds, two or three shade steps. No existing IP.",
+    "pixel": false,
+    "perspective": "orthographic front for icons and UI; full-body three-quarter for characters and enemies",
+    "outline": "thin even dark ink outline, consistent width",
+    "light": "clear key from the top left, hard-edged cel shade, one small specular mark on glossy surfaces",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1A1420",
+      "#3A2A28",
+      "#7A5040",
+      "#D4A07A",
+      "#F3D2B8",
+      "#FFF6EC",
+      "#1E2A4A",
+      "#3A5A9A",
+      "#7AB4E0",
+      "#8C1E28",
+      "#E04A5A",
+      "#F0C04A",
+      "#2A6A4A",
+      "#5AAA7A",
+      "#6A4A8A",
+      "#222222"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "cel-shaded anime-inspired game asset, generic original design only, thin clean even black outline, hard-edged color holds, two or three discrete shade steps, simple shiny highlight marks, no photorealism, no film grain, no trademarked character, not from any existing anime, manga, film or game, not in the style of a named studio or series, centered subject, flat solid magenta background #FF00FF, no floor, no text, original design",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "retro_8bit": {
+    "title": "Retro 8-bit",
+    "description": "Generic 4-color 8-bit pixel art, chunky clusters, hard edges, no anti-aliasing. Not from any console library.",
+    "pixel": true,
+    "perspective": "three-quarter top-down for items and tiles; side-view full body for characters and enemies",
+    "outline": "optional 1-pixel outline using only the darkest of the four colors, no anti-aliasing, crisp square pixels",
+    "light": "top-left, shading only with the four locked colors, no extra midtones",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1B0326",
+      "#F2E6C8",
+      "#C43C3C",
+      "#2E8B6A"
+    ],
+    "sizes": {
+      "icons": [
+        32,
+        32
+      ],
+      "tiles": [
+        16,
+        16
+      ],
+      "props": [
+        32,
+        32
+      ],
+      "characters": [
+        32,
+        48
+      ],
+      "enemies": [
+        32,
+        32
+      ],
+      "ui": [
+        32,
+        32
+      ],
+      "vfx": [
+        32,
+        32
+      ],
+      "backgrounds": [
+        256,
+        144
+      ]
+    },
+    "style_prefix": "generic 8-bit console pixel art game asset, only four colors, chunky clustered square pixels, no anti-aliasing, no blur, no gradients, no dither beyond simple 2-pixel checker if needed, limited 4-color palette #1B0326 #F2E6C8 #C43C3C #2E8B6A, lighting from the top left suggested only by those four colors, centered subject, flat solid magenta background #FF00FF used only as a backdrop key and not as a sprite color, no drop shadow, no floor, no ground plane, no text, original design not from any existing game or console library",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "vaporwave_synth": {
+    "title": "Vaporwave synth",
+    "description": "Retro-futurist synth look: chrome, sunset peach, electric cyan, hot pink that is not pure magenta.",
+    "pixel": false,
+    "perspective": "three-quarter view for objects; front orthographic for UI",
+    "outline": "thin chrome or electric-cyan rim light, not a cartoon outline",
+    "light": "sunset key from the left, electric-cyan rim from the right, soft neon glow on the subject only",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#16081F",
+      "#2A1038",
+      "#4A2A6A",
+      "#7A5CFF",
+      "#3DE0FF",
+      "#FF4AD8",
+      "#FF8BC9",
+      "#FFB86B",
+      "#FFD6A0",
+      "#F4E8FF",
+      "#8A8AA0",
+      "#E8E8F4",
+      "#1A1A28",
+      "#C0C8D8",
+      "#21C7A8",
+      "#FFFFFF"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "vaporwave synth game asset, retro-futurist 1980s-inspired original design, chrome highlights, sunset peach and electric cyan, hot pink #FF4AD8 that is clearly not pure magenta, deep purple shadows, optional soft gradient on the object only, no photoreal person, centered subject, flat solid magenta background #FF00FF used only as a backdrop key, the subject itself must contain no pure #FF00FF pixels, no floor grid unless this is a background plate, no text, no logos, no album art pastiche of a real artist, original design not from any existing franchise",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "gothic_woodcut": {
+    "title": "Gothic woodcut",
+    "description": "Medieval wood-block engraving, dense hatch and cross-hatch, black ink on cream, high contrast.",
+    "pixel": false,
+    "perspective": "three-quarter or slightly flattened print view for objects; full-body for characters",
+    "outline": "carved black ink contour with interior hatch, no soft airbrush edge",
+    "light": "raking light from the top left implied only by hatch density, as in a relief print",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#140C08",
+      "#1A1008",
+      "#3B2A1A",
+      "#5A3E28",
+      "#7A5A3A",
+      "#C4A35A",
+      "#E8D8B8",
+      "#F4EBD4",
+      "#6B1D1D",
+      "#8A3A2A",
+      "#4A3A28",
+      "#2A2018"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "gothic woodcut engraving game asset, dense black ink hatch and cross-hatch lines as in a medieval wood-block print, cream paper tones only inside the subject, high-contrast carved look, no soft airbrush, no full-color painting, centered subject, flat solid magenta background #FF00FF, no floor, no typography, no page or book around the subject, original design not from any existing book, print or game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  },
+  "isometric_voxel": {
+    "title": "Isometric voxel",
+    "description": "Chunky cubic voxels, clean 30-degree isometric camera, flat per-block colors, soft crack AO.",
+    "pixel": false,
+    "perspective": "30-degree isometric camera showing the top and two sides; tiles may be a top-down voxel floor",
+    "outline": "none; faceted voxel edges only",
+    "light": "soft top-left key, gentle ambient occlusion in the cracks between cubes",
+    "chroma": "#FF00FF",
+    "palette": [
+      "#1E1E24",
+      "#3A3A44",
+      "#6A6A78",
+      "#C8C8D4",
+      "#F4F4FA",
+      "#C45A2A",
+      "#E8A04A",
+      "#E8D056",
+      "#2E7A4A",
+      "#5AAA62",
+      "#2A5A8A",
+      "#4A8AD0",
+      "#8A3A8A",
+      "#C44A5A",
+      "#8A5A3A",
+      "#D0B090"
+    ],
+    "sizes": {
+      "icons": [
+        256,
+        256
+      ],
+      "tiles": [
+        256,
+        256
+      ],
+      "props": [
+        384,
+        384
+      ],
+      "characters": [
+        512,
+        768
+      ],
+      "enemies": [
+        512,
+        512
+      ],
+      "ui": [
+        256,
+        256
+      ],
+      "vfx": [
+        384,
+        384
+      ],
+      "backgrounds": [
+        1280,
+        720
+      ]
+    },
+    "style_prefix": "isometric voxel game asset, chunky cubic voxels, clean 30-degree isometric camera showing the top and two sides, soft ambient occlusion in the cracks, limited flat colors per block, no smooth subdivision, no photorealism, centered subject, flat solid magenta background #FF00FF, no ground plane, no text, original design, not from any existing voxel sandbox, toy or game",
+    "negative": "no text, no letters, no numbers, no labels, no watermark, no signature, no logo, no checkerboard, no photorealistic person, no real celebrity, no copyrighted or trademarked character, no existing video-game character, no brand, original design only"
+  }
+}

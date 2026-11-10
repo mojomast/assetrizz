@@ -1,0 +1,15 @@
+License
+=======
+
+Every asset in this library is an original generated work made for Kyle Durepos.
+
+License field on each database row:
+    original, generated for Kyle Durepos
+
+Do not prompt for, imitate, or include real people, trademarks, logos, or
+copyrighted characters from existing games, films, or comics. This is a private
+project library, not an official TempleOS, Hermes, or any other franchise pack.
+
+Raw AI image output may have limited copyright protection in some jurisdictions.
+Selection, prompting, post-processing, cataloguing, and arrangement in this
+library are part of the project workflow.
