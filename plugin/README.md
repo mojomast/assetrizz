@@ -1,5 +1,13 @@
 # Assetrizz Hermes plugin
 
+> **This in-tree copy is superseded.** Install and develop the plugin from
+> **[mojomast/assetrizz-hermes](https://github.com/mojomast/assetrizz-hermes)**
+> (`hermes plugins install mojomast/assetrizz-hermes`). This `plugin/`
+> directory is kept as a snapshot so existing links and checkouts keep
+> working; it is not the catalog pin. Asset fetches remain pinned to
+> this library repo’s tag `v0.1.0`.
+
+
 Search the [assetrizz](https://github.com/mojomast/assetrizz) 2D game-asset
 catalog and compose scenes from those assets. The Hermes agent gets two compact
 tools; you get a dark compose pane that live-previews what it placed and lets

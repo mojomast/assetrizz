@@ -1,5 +1,15 @@
 # Catalog submission draft — assetrizz v0.1.0
 
+> **Superseded.** The plugin was split into
+> [mojomast/assetrizz-hermes](https://github.com/mojomast/assetrizz-hermes).
+> The active catalog draft is
+> [docs/SUBMISSION.md](https://github.com/mojomast/assetrizz-hermes/blob/main/docs/SUBMISSION.md)
+> there (repo `mojomast/assetrizz-hermes`, pin
+> `023e61cb604343a9e74836ad471ae25439dda745`, branch
+> `catalog/assetrizz-hermes-v0.1.0`). This file records the earlier
+> in-tree `plugin/` pin and is kept for history.
+
+
 **Status: ready to open, waiting for Kyle's yes.** The plugin v0.1.0 tag and
 GitHub release exist. The catalog branch is on the fork. The catalog PR on
 `NousResearch/hermes-agent` has **not** been opened.

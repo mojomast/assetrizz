@@ -47,7 +47,7 @@ assetrizz/
 ├── db/
 │   ├── assets.db.xz            # compressed catalog (4.7 MB)
 │   └── restore.sh              # writes db/assets.db (gitignored)
-├── plugin/                     # installable Hermes plugin (not the 14,641 PNGs)
+├── plugin/                     # in-tree copy of the Hermes plugin (superseded — use mojomast/assetrizz-hermes)
 └── pipeline/                   # style packs, queue, ingest, search, gallery
     ├── style_packs.json
     ├── PIPELINE.md
@@ -191,30 +191,21 @@ The `pipeline/query.py` and `pipeline/serve.py` CLIs talk to a database file nex
 
 ## Hermes plugin: search and compose
 
-The [`plugin/`](plugin/) directory is a native Hermes plugin. The agent searches the catalog and composes scenes; you can watch the current scene in a dark Desktop pane. A 4.7 MB compressed catalog is bundled, so search works after installing `plugin/` alone.
-
-Install **only** that directory — a root install is refused so Hermes does not copy the 1.65 GB asset tree into the plugins folder:
+The Hermes plugin now lives in its own repository: **[mojomast/assetrizz-hermes](https://github.com/mojomast/assetrizz-hermes)** (tag [v0.1.0](https://github.com/mojomast/assetrizz-hermes/releases/tag/v0.1.0)). The agent searches this library’s catalog and composes scenes; you can watch the current scene in a dark Desktop pane. A 4.7 MB compressed catalog is bundled with the plugin, so search works after install. Asset fetches stay pinned to **this** repo’s tag `v0.1.0` (commit `05339c228f55ac95ad21b5c947db0c6e36207cd4`).
 
 ```bash
-hermes plugins install mojomast/assetrizz/plugin
+hermes plugins install mojomast/assetrizz-hermes
 ```
 
-**Asset modes:** `on_demand` (default) fetches a single pinned, SHA-256-verified PNG from GitHub raw when you place, render, or preview it; `local` uses a library you download once (full tree or chosen style packs) into a directory you pick; `offline` never touches the network and needs the file on disk. Bulk downloads are user-initiated only — click **Download library** in the pane (size estimate, progress, cancel) or run `python -m assetrizz_plugin.cli`. That is not a model tool. Optional `library_path` / `ASSETRIZZ_LIBRARY` still prefers a complete checkout when you already have one.
+**Asset modes:** `on_demand` (default) fetches a single pinned, SHA-256-verified PNG from GitHub raw when you place, render, or preview it; `local` uses a library you download once (full tree or chosen style packs) into a directory you pick; `offline` never touches the network and needs the file on disk. Bulk downloads are user-initiated only — click **Download library** in the pane or run `python -m assetrizz_plugin.cli`. That is not a model tool.
 
-Tools:
-
-- `assetrizz_search` — `op=search`, `op=get`, `op=stats` (FTS over slugs, tags, descriptions, styles, categories)
-- `assetrizz_scene` — `op=create`, `place`, `tile`, `move`, `scale`, `flip`, `layer`, `remove`, `list`, `clear`, `render`, `save`, `load`
-
-Skill id for `skill_view`: `assetrizz:assetrizz-composer`. Hermes `>=0.23.0` is required for the pane (`ctx.rest`). The two tools still run when the pane is unavailable. Render writes a PNG under the plugin data / export directory; the tool result is a path, not an embedded image.
+The in-tree [`plugin/`](plugin/) directory is kept as a snapshot of the same plugin and is **superseded** by `assetrizz-hermes`. Prefer the standalone repo for installs, issues, and catalog pins. Full notes are in the [plugin README](https://github.com/mojomast/assetrizz-hermes#readme). Scene JSON for the example below is at [`docs/example-scene.json`](docs/example-scene.json).
 
 An example scene composed from real `pixel_32` tiles, trees, a roadside inn, a ranger, and a hare:
 
 <p align="center">
   <img src="docs/example-scene.png" alt="Example assetrizz scene: a pixel_32 meadow path with an inn, trees, a ranger and a hare" width="640">
 </p>
-
-Full install notes, disclosure, and developer commands are in [`plugin/README.md`](plugin/README.md). Scene JSON for the example is at [`docs/example-scene.json`](docs/example-scene.json).
 
 ## Generate your own: the pipeline
 
@@ -303,7 +294,7 @@ The database also stores prompt, negative, style prefix, thumbnail path, phash, 
 
 ## Roadmap
 
-- [x] **Hermes plugin** — `plugin/` with `assetrizz_search` and `assetrizz_scene`, a dark compose pane, and a catalog-ready layout *(on `feat/hermes-plugin`; not catalog-submitted yet)*
+- [x] **Hermes plugin** — lives in [mojomast/assetrizz-hermes](https://github.com/mojomast/assetrizz-hermes) (`v0.1.0`); the in-tree `plugin/` copy is superseded but kept
 - [ ] Live verification on a Hermes Desktop host, then an authorized catalog pin
 - [ ] Release-hosted asset packs *(planned)*
 
