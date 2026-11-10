@@ -29,3 +29,6 @@ PROGRESS.json
 
 __pycache__/
 .env
+
+# Local plugin data used to bake docs/example-scene.png
+.example-scene-data/

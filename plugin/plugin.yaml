@@ -1,0 +1,51 @@
+name: assetrizz
+version: "0.1.0"
+description: >-
+  Skill id assetrizz:assetrizz-composer. Search a local assetrizz 2D game-asset
+  library (FTS over slugs, tags, descriptions, styles, and categories) and
+  compose scenes from those assets. Tools: assetrizz_search and assetrizz_scene.
+  The plugin reads PNG files and a SQLite catalog from a library path you
+  configure (a clone or download of mojomast/assetrizz); it does not bundle the
+  14,641 assets, does not call the network, and holds no credentials. The first
+  search may decompress db/assets.db.xz into the library or the plugin data dir.
+  Rendered scenes are written as PNG and JSON under the plugin data / export
+  directory. Hermes Desktop 0.23 or newer can show a dark compose pane that
+  live-previews the current scene through ctx.rest. The two tools still install
+  and run when that pane is unavailable. Install this plugin/ directory.
+author: mojomast
+license: MIT
+homepage: https://github.com/mojomast/assetrizz
+tags:
+  - assets
+  - game
+  - sprites
+  - desktop
+  - skills
+manifest_version: 2
+api_version: 1
+requires_hermes: ">=0.23.0"
+provides_tools:
+  - assetrizz_search
+  - assetrizz_scene
+provides_hooks: []
+provides_middleware: []
+requires_env: []
+# Kept in step with pyproject.toml beside this file. That file is what
+# Hermes installs for dependencies.
+python_dependencies:
+  - "pillow>=10,<14"
+config_schema:
+  library_path:
+    type: str
+    default: ""
+    label: Library path
+    description: >-
+      Path to an assetrizz checkout or download that contains assets/ and
+      db/assets.db.xz. Leave empty to auto-detect a checkout next to this plugin.
+  export_dir:
+    type: str
+    default: ""
+    label: Export directory
+    description: >-
+      Optional directory for rendered PNG and saved scene JSON. Must not be a
+      filesystem root. Defaults to the plugin data exports folder.

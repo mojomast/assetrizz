@@ -1,0 +1,23 @@
+# This file is not the plugin. It exists so `hermes plugins install`
+# mojomast/assetrizz (no /plugin suffix) refuses before Hermes
+# publishes the clone. A root install would copy the 14,641-PNG
+# library, pipeline/, and tests/.
+# Install the plugin directory instead:
+#   hermes plugins install mojomast/assetrizz/plugin
+#
+# Then point the Library path setting (or ASSETRIZZ_LIBRARY) at this
+# checkout so the plugin can read assets/ and db/assets.db.xz.
+#
+# Hermes v0.21.7 checks requires_hermes, then manifest_version, inside
+# pm.plugin_declarations.manifest_version_error, and that check runs before
+# publish. >=999 fails on current Hermes. manifest_version 99 fails even
+# when the running version string cannot be parsed.
+name: assetrizz-repo-root
+version: "0.1.0"
+manifest_version: 99
+requires_hermes: ">=999.0.0"
+description: >-
+  Refuses a repository-root install so the asset library and tests are
+  not published into ~/.hermes/plugins. The plugin is the plugin/ directory.
+author: mojomast
+license: MIT

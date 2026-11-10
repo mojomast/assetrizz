@@ -1,0 +1,355 @@
+/* Dark mode is always on. Do not follow a light host theme. */
+.az-host {
+  height: 100%;
+  min-height: 0;
+  background: #0e0d12;
+  color: #e8e4f0;
+}
+
+.az {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  padding: 0;
+  font: 13px/1.45 ui-sans-serif, system-ui, sans-serif;
+  color: #e8e4f0;
+  background: #0e0d12;
+}
+
+.az *,
+.az *::before,
+.az *::after {
+  box-sizing: border-box;
+}
+
+.az-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #2a2833;
+}
+
+.az-brand {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  align-items: center;
+}
+
+.az-mark {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 6px;
+  border: 1.5px solid #f0c14b;
+  background:
+    linear-gradient(135deg, #2a2238 50%, transparent 50%),
+    #16151c;
+  position: relative;
+}
+
+.az-mark::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 7px;
+  height: 7px;
+  background: #f0c14b;
+  border-radius: 1px;
+}
+
+.az-kicker {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b8698;
+}
+
+.az-title {
+  margin: 1px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f4f1fa;
+}
+
+.az-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 3px 9px;
+  border: 1px solid #2a2833;
+  border-radius: 999px;
+  color: #b7b3c2;
+  font-size: 11px;
+  background: #16151c;
+}
+
+.az-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: #5c5868;
+}
+
+.az-live.is-live .az-dot,
+.az-live.is-ready .az-dot {
+  background: #f0c14b;
+}
+
+.az-live.is-live .az-dot {
+  animation: az-pulse 1.4s ease-in-out infinite;
+}
+
+.az-live.is-offline .az-dot,
+.az-live.is-error .az-dot {
+  background: #e77888;
+}
+
+@keyframes az-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+.az-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.9fr);
+  gap: 0;
+}
+
+.az-stage {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #2a2833;
+  background: #121119;
+}
+
+.az-canvas {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 16px;
+  background-color: #121119;
+  background-image:
+    linear-gradient(45deg, #1a1820 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1820 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1820 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1820 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+}
+
+.az-canvas img,
+.az-fallback {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 1px solid #2a2833;
+  border-radius: 8px;
+  background: #0e0d12;
+}
+
+.az-fallback {
+  min-width: 220px;
+  min-height: 140px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  color: #8b8698;
+  font-size: 12px;
+  text-align: center;
+  image-rendering: auto;
+}
+
+.az-side {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  background: #14131a;
+  overflow: hidden;
+}
+
+.az-search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px 8px;
+  border-bottom: 1px solid #2a2833;
+}
+
+.az-search input,
+.az-search select {
+  width: 100%;
+  border: 1px solid #2a2833;
+  background: #0e0d12;
+  color: #e8e4f0;
+  border-radius: 8px;
+  padding: 7px 9px;
+  font: inherit;
+  outline: none;
+}
+
+.az-search input:focus,
+.az-search select:focus {
+  border-color: #f0c14b;
+}
+
+.az-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.az-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 6px;
+  padding: 8px 12px;
+  overflow: auto;
+  min-height: 108px;
+  max-height: 220px;
+  border-bottom: 1px solid #2a2833;
+}
+
+.az-card {
+  margin: 0;
+  border: 1px solid #2a2833;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0e0d12;
+  cursor: default;
+  min-width: 0;
+}
+
+.az-card img,
+.az-card .az-ph {
+  display: block;
+  width: 100%;
+  height: 64px;
+  object-fit: contain;
+  background: #1a1820;
+  image-rendering: pixelated;
+}
+
+.az-card .az-ph {
+  display: grid;
+  place-items: center;
+  color: #5c5868;
+  font-size: 10px;
+}
+
+.az-card figcaption {
+  padding: 4px 5px 5px;
+  color: #b7b3c2;
+  font-size: 10px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.az-layers {
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 10px 12px;
+}
+
+.az-section-label {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b8698;
+}
+
+.az-layer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 6px;
+  border-radius: 6px;
+  color: #c8c4d0;
+  font-size: 12px;
+}
+
+.az-layer.is-on {
+  background: #221f2c;
+  color: #f4f1fa;
+}
+
+.az-layer code {
+  color: #f0c14b;
+  font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.az-layer span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.az-layer em {
+  color: #8b8698;
+  font-style: normal;
+  font-size: 11px;
+}
+
+.az-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid #2a2833;
+  color: #8b8698;
+  font-size: 11px;
+}
+
+.az-foot strong {
+  color: #c8c4d0;
+  font-weight: 600;
+}
+
+.az-empty {
+  margin: 28px 18px;
+  max-width: 36em;
+}
+
+.az-empty h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  color: #f4f1fa;
+}
+
+.az-empty p {
+  margin: 0;
+  color: #b7b3c2;
+}
+
+.az-quiet {
+  color: #8b8698;
+}
+
+.az-meta {
+  padding: 0 16px 10px;
+  color: #8b8698;
+  font-size: 11px;
+}

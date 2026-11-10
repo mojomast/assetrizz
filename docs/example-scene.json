@@ -1,0 +1,310 @@
+{
+  "id": "pixel32-meadow",
+  "width": 640,
+  "height": 320,
+  "background": {
+    "type": "color",
+    "color": "#1a3a28"
+  },
+  "layers": [
+    {
+      "id": "L1",
+      "asset_id": 536,
+      "slug": "pixel_32/tiles/floor/grass_base",
+      "path": "assets/pixel_32/tiles/floor/grass_base.png",
+      "x": 0,
+      "y": 0,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 0,
+      "visible": true,
+      "tile": {
+        "w": 640,
+        "h": 320
+      }
+    },
+    {
+      "id": "L2",
+      "asset_id": 4461,
+      "slug": "pixel_32/tiles/floor/flower_meadow_base",
+      "path": "assets/pixel_32/tiles/floor/flower_meadow_base.png",
+      "x": 0,
+      "y": 0,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 1,
+      "visible": true,
+      "tile": {
+        "w": 640,
+        "h": 64
+      }
+    },
+    {
+      "id": "L3",
+      "asset_id": 3972,
+      "slug": "pixel_32/tiles/floor/dirt_path_base",
+      "path": "assets/pixel_32/tiles/floor/dirt_path_base.png",
+      "x": 256,
+      "y": 0,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 2,
+      "visible": true,
+      "tile": {
+        "w": 128,
+        "h": 320
+      }
+    },
+    {
+      "id": "L4",
+      "asset_id": 5394,
+      "slug": "pixel_32/tiles/floor/shallow_water_base",
+      "path": "assets/pixel_32/tiles/floor/shallow_water_base.png",
+      "x": 576,
+      "y": 192,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 3,
+      "visible": true,
+      "tile": {
+        "w": 64,
+        "h": 128
+      }
+    },
+    {
+      "id": "L11",
+      "asset_id": 8081,
+      "slug": "pixel_32/foliage/bush/flowering_shrub_plain",
+      "path": "assets/pixel_32/foliage/bush/flowering_shrub_plain.png",
+      "x": 480,
+      "y": 96,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 4,
+      "visible": true
+    },
+    {
+      "id": "L12",
+      "asset_id": 8078,
+      "slug": "pixel_32/foliage/bush/round_hedge_plain",
+      "path": "assets/pixel_32/foliage/bush/round_hedge_plain.png",
+      "x": 544,
+      "y": 112,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 4,
+      "visible": true
+    },
+    {
+      "id": "L5",
+      "asset_id": 4411,
+      "slug": "pixel_32/tiles/wall/wood_fence_base",
+      "path": "assets/pixel_32/tiles/wall/wood_fence_base.png",
+      "x": 384,
+      "y": 64,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 4,
+      "visible": true,
+      "tile": {
+        "w": 192,
+        "h": 32
+      }
+    },
+    {
+      "id": "L7",
+      "asset_id": 10109,
+      "slug": "pixel_32/buildings/civic/roadside_inn_exterior",
+      "path": "assets/pixel_32/buildings/civic/roadside_inn_exterior.png",
+      "x": 24,
+      "y": 48,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 4,
+      "visible": true
+    },
+    {
+      "id": "L10",
+      "asset_id": 10763,
+      "slug": "pixel_32/foliage/tree/copper_beech_plain",
+      "path": "assets/pixel_32/foliage/tree/copper_beech_plain.png",
+      "x": 400,
+      "y": 48,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 5,
+      "visible": true
+    },
+    {
+      "id": "L6",
+      "asset_id": 362,
+      "slug": "pixel_32/tiles/wall/stone_wall_base",
+      "path": "assets/pixel_32/tiles/wall/stone_wall_base.png",
+      "x": 0,
+      "y": 16,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 5,
+      "visible": true,
+      "tile": {
+        "w": 32,
+        "h": 96
+      }
+    },
+    {
+      "id": "L8",
+      "asset_id": 2474,
+      "slug": "pixel_32/props/object/oak_tree_plain",
+      "path": "assets/pixel_32/props/object/oak_tree_plain.png",
+      "x": 160,
+      "y": 96,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 5,
+      "visible": true
+    },
+    {
+      "id": "L9",
+      "asset_id": 2555,
+      "slug": "pixel_32/props/object/pine_tree_plain",
+      "path": "assets/pixel_32/props/object/pine_tree_plain.png",
+      "x": 200,
+      "y": 80,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 5,
+      "visible": true
+    },
+    {
+      "id": "L13",
+      "asset_id": 894,
+      "slug": "pixel_32/props/object/mailbox_plain",
+      "path": "assets/pixel_32/props/object/mailbox_plain.png",
+      "x": 128,
+      "y": 176,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 6,
+      "visible": true
+    },
+    {
+      "id": "L14",
+      "asset_id": 740,
+      "slug": "pixel_32/props/object/crate_plain",
+      "path": "assets/pixel_32/props/object/crate_plain.png",
+      "x": 96,
+      "y": 208,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 6,
+      "visible": true
+    },
+    {
+      "id": "L15",
+      "asset_id": 739,
+      "slug": "pixel_32/props/object/barrel_plain",
+      "path": "assets/pixel_32/props/object/barrel_plain.png",
+      "x": 120,
+      "y": 224,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 6,
+      "visible": true
+    },
+    {
+      "id": "L16",
+      "asset_id": 737,
+      "slug": "pixel_32/props/object/chest_closed",
+      "path": "assets/pixel_32/props/object/chest_closed.png",
+      "x": 400,
+      "y": 208,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 6,
+      "visible": true
+    },
+    {
+      "id": "L19",
+      "asset_id": 8233,
+      "slug": "pixel_32/creatures/animal/garden_hare_idle_front",
+      "path": "assets/pixel_32/creatures/animal/garden_hare_idle_front.png",
+      "x": 352,
+      "y": 224,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 7,
+      "visible": true
+    },
+    {
+      "id": "L20",
+      "asset_id": 10307,
+      "slug": "pixel_32/creatures/animal/house_cat_idle_side",
+      "path": "assets/pixel_32/creatures/animal/house_cat_idle_side.png",
+      "x": 80,
+      "y": 240,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 7,
+      "visible": true
+    },
+    {
+      "id": "L21",
+      "asset_id": 1479,
+      "slug": "pixel_32/enemies/creature/walking_mushroom_idle_front",
+      "path": "assets/pixel_32/enemies/creature/walking_mushroom_idle_front.png",
+      "x": 496,
+      "y": 208,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 7,
+      "visible": true
+    },
+    {
+      "id": "L17",
+      "asset_id": 4105,
+      "slug": "pixel_32/characters/humanoid/ranger_front",
+      "path": "assets/pixel_32/characters/humanoid/ranger_front.png",
+      "x": 288,
+      "y": 160,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 8,
+      "visible": true
+    },
+    {
+      "id": "L18",
+      "asset_id": 3953,
+      "slug": "pixel_32/characters/humanoid/child_villager_three_quarter",
+      "path": "assets/pixel_32/characters/humanoid/child_villager_three_quarter.png",
+      "x": 200,
+      "y": 192,
+      "scale": 1.0,
+      "flip_x": false,
+      "flip_y": false,
+      "z": 8,
+      "visible": true
+    }
+  ],
+  "layer_count": 21,
+  "revision": 23
+}
