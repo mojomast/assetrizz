@@ -12,6 +12,9 @@ function ComposerPane() {
   const previewUrl = useRef("");
   const previewSha = useRef("");
   const queryRef = useRef({ q: "", style: "", category: "" });
+  const selectedPacksRef = useRef({});
+  const removeConfirmRef = useRef(false);
+  const cacheConfirmRef = useRef(false);
 
   useEffect(() => {
     let stopped = false;
@@ -30,13 +33,13 @@ function ComposerPane() {
       }
       return Promise.resolve(rest("/status"))
         .then((status) => {
-          const libraryOk = !status || status.library_ok !== false;
+          const catalogOk = !status || status.catalog_ok !== false;
           const current = status && status.current;
-          const sceneCall = libraryOk
+          const sceneCall = catalogOk
             ? Promise.resolve(rest(current ? "/scene?name=" + encodeURIComponent(current) : "/scene"))
             : Promise.resolve(null);
           const previewCall =
-            libraryOk && current
+            catalogOk && current
               ? Promise.resolve(
                   rest(
                     "/preview?name=" +
@@ -45,7 +48,7 @@ function ComposerPane() {
                   )
                 )
               : Promise.resolve(null);
-          const searchCall = libraryOk
+          const searchCall = catalogOk
             ? Promise.resolve(
                 rest(
                   "/search?" +
@@ -66,11 +69,12 @@ function ComposerPane() {
           const sceneBody = packed[1] || {};
           const preview = packed[2];
           const found = packed[3] || {};
-          if (status.library_ok === false) {
+          if (status.catalog_ok === false) {
             setModel({
               backend: "ready",
+              catalogOk: false,
               libraryOk: false,
-              message: status.library_error || status.fix || "Library path is not set.",
+              message: status.catalog_error || status.library_error || status.fix || "Bundled catalog is missing.",
             });
             return;
           }
@@ -87,9 +91,12 @@ function ComposerPane() {
           const styles = (stats.styles && Array.isArray(status.styles) ? status.styles : null) || styleNames(status);
           setModel({
             backend: "ready",
-            libraryOk: true,
+            catalogOk: true,
+            libraryOk: status.library_ok !== false,
             live: true,
             library: status.library || "",
+            assetMode: status.asset_mode || (status.library_status && status.library_status.asset_mode) || "on_demand",
+            libraryInfo: status.library_status || {},
             counts: stats,
             styles: styles,
             categories: categoryNames(status),
@@ -103,6 +110,9 @@ function ComposerPane() {
             query: queryRef.current.q,
             style: queryRef.current.style,
             category: queryRef.current.category,
+            selectedPacks: selectedPacksRef.current,
+            removeConfirm: removeConfirmRef.current,
+            cacheConfirm: cacheConfirmRef.current,
           });
           hydrateThumbs(items, rest, function () {
             if (stopped) return;
@@ -144,6 +154,73 @@ function ComposerPane() {
       rootRef.current,
       model,
       {
+        onTogglePack(name, checked) {
+          const next = Object.assign({}, selectedPacksRef.current);
+          if (checked) next[name] = true;
+          else delete next[name];
+          selectedPacksRef.current = next;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { selectedPacks: next });
+          });
+        },
+        onDownload(packs) {
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/download", { method: "POST", body: { packs: packs || ["*"] } })).then(function () {
+            removeConfirmRef.current = false;
+          });
+        },
+        onCancel() {
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/cancel", { method: "POST", body: {} }));
+        },
+        onAskRemove() {
+          removeConfirmRef.current = true;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { removeConfirm: true });
+          });
+        },
+        onRemove(confirm) {
+          if (!confirm) {
+            removeConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { removeConfirm: false });
+            });
+            return;
+          }
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/remove", { method: "POST", body: { confirm: true } })).then(function () {
+            removeConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { removeConfirm: false });
+            });
+          });
+        },
+        onAskClearCache() {
+          cacheConfirmRef.current = true;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { cacheConfirm: true });
+          });
+        },
+        onClearCache(confirm) {
+          if (!confirm) {
+            cacheConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { cacheConfirm: false });
+            });
+            return;
+          }
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/clear-cache", { method: "POST", body: { confirm: true } })).then(function () {
+            cacheConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { cacheConfirm: false });
+            });
+          });
+        },
         onSearch(q, style, category) {
           queryRef.current = { q: q || "", style: style || "", category: category || "" };
           const rest = transport.rest;

@@ -12,7 +12,14 @@ from typing import Any
 
 from assetrizz_plugin.config import resolve_export_dir
 from assetrizz_plugin.library import LibraryError, resolve_asset
-from assetrizz_plugin.paths import PathError, confine, data_home, ensure_layout, require_non_root
+from assetrizz_plugin.paths import (
+    PathError,
+    confine,
+    data_home,
+    ensure_layout,
+    refuse_denied_write,
+    require_non_root,
+)
 
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 HEX_RE = re.compile(r"^#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?$")
@@ -145,6 +152,7 @@ def _scene_path(name: str) -> Path:
 
 
 def _atomic_write(path: Path, data: bytes) -> None:
+    refuse_denied_write(path, label="export")
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + f".{uuid.uuid4().hex[:8]}.tmp")
     try:
@@ -616,6 +624,7 @@ def render_scene(args: dict[str, Any] | None = None) -> dict[str, Any]:
         image = compose(scene)
         name = str(scene["id"])
         png_path = _export_png_path(name)
+        refuse_denied_write(png_path, label="export png")
         image.save(png_path, format="PNG", optimize=True)
         preview_meta = write_preview(image, name)
         return {
@@ -651,6 +660,7 @@ def write_preview(image, name: str, *, max_px: int = 960) -> dict[str, Any]:
             last = buf.getvalue()
             # Base64 expands ~4/3 plus JSON envelope; leave headroom.
             if int(len(last) * 4 / 3) + PREVIEW_HEADROOM <= MAX_ENVELOPE_BYTES:
+                refuse_denied_write(path, label="preview")
                 path.write_bytes(last)
                 return {
                     "path": str(path),

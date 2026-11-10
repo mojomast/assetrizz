@@ -2,7 +2,7 @@
 
 ``dashboard/plugin_api.py`` mounts these at ``/api/plugins/assetrizz/``.
 The Desktop pane talks only through ctx.rest. Previews stay under the 512 KiB
-JSON budget. Asset bytes are loaded only from the library root.
+JSON budget. Asset bytes come from a local library, the on-demand cache, or a single allowlisted fetch.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import hashlib
 from typing import Any
 
 from assetrizz_plugin import MIN_HERMES, PLUGIN_ID, __version__
-from assetrizz_plugin.config import ConfigError, resolve_library
+from assetrizz_plugin.config import ConfigError, asset_mode, resolve_library_optional
 from assetrizz_plugin.library import (
     LibraryError,
     get_asset,
@@ -47,15 +47,25 @@ def health() -> dict[str, Any]:
         "pane": PLUGIN_ID,
         "version": __version__,
         "min_hermes": MIN_HERMES,
+        "asset_mode": asset_mode(),
     }
     try:
-        library = resolve_library()
+        from assetrizz_plugin.library import current_db
+
+        body["catalog"] = str(current_db())
+        body["catalog_ok"] = True
+    except Exception as exc:
+        body["catalog_ok"] = False
+        body["catalog_error"] = str(exc)
+        body["fix"] = getattr(exc, "fix", "")
+        body["ok"] = False
+    library = resolve_library_optional()
+    if library is not None:
         body["library"] = str(library)
         body["library_ok"] = True
-    except (ConfigError, PathError) as exc:
+    else:
+        body["library"] = ""
         body["library_ok"] = False
-        body["library_error"] = str(exc)
-        body["fix"] = getattr(exc, "fix", "")
     return body
 
 
@@ -63,7 +73,7 @@ def status() -> dict[str, Any]:
     body = health()
     body["current"] = current_name()
     body["scenes"] = list_scenes()
-    if body.get("library_ok"):
+    if body.get("catalog_ok"):
         try:
             info = stats()
             body["stats"] = {
@@ -73,7 +83,74 @@ def status() -> dict[str, Any]:
             }
         except Exception as exc:
             body["stats_error"] = str(exc)
+    try:
+        from assetrizz_plugin.install import library_status
+
+        body["library_status"] = library_status()
+    except Exception as exc:
+        body["library_status_error"] = str(exc)
     return body
+
+
+def library_view() -> dict[str, Any]:
+    from assetrizz_plugin.install import library_status
+
+    try:
+        return library_status()
+    except (ConfigError, LibraryError, PathError, ValueError) as exc:
+        return _fail(exc)
+
+
+def library_download(args: dict[str, Any] | None = None) -> dict[str, Any]:
+    from assetrizz_plugin.install import start_download
+
+    args = args or {}
+    packs = args.get("packs") or args.get("style") or args.get("styles")
+    if isinstance(packs, str):
+        packs = [packs]
+    if args.get("all") or packs in (None, [], "*"):
+        packs = ["*"]
+    dest = args.get("dest") or args.get("path")
+    try:
+        from pathlib import Path
+
+        return start_download(list(packs), dest=Path(dest).expanduser() if dest else None)
+    except (ConfigError, LibraryError, PathError, ValueError) as exc:
+        return _fail(exc)
+
+
+def library_cancel() -> dict[str, Any]:
+    from assetrizz_plugin.install import cancel_download
+
+    try:
+        return cancel_download()
+    except (ConfigError, LibraryError, PathError, ValueError) as exc:
+        return _fail(exc)
+
+
+def library_remove(args: dict[str, Any] | None = None) -> dict[str, Any]:
+    from assetrizz_plugin.install import remove_local_library
+
+    args = args or {}
+    confirm = args.get("confirm") in (True, "true", "yes", "1", 1)
+    dest = args.get("dest") or args.get("path")
+    try:
+        from pathlib import Path
+
+        return remove_local_library(confirm=confirm, dest=Path(dest).expanduser() if dest else None)
+    except (ConfigError, LibraryError, PathError, ValueError) as exc:
+        return _fail(exc)
+
+
+def library_clear_cache(args: dict[str, Any] | None = None) -> dict[str, Any]:
+    from assetrizz_plugin.install import clear_cache
+
+    args = args or {}
+    confirm = args.get("confirm") in (True, "true", "yes", "1", 1)
+    try:
+        return clear_cache(confirm=confirm)
+    except (ConfigError, LibraryError, PathError, ValueError) as exc:
+        return _fail(exc)
 
 
 def scene_view(name: str | None = None) -> dict[str, Any]:

@@ -24,12 +24,12 @@ function mountPane(root, state, actions, css) {
     );
     return;
   }
-  if (model.libraryOk === false) {
+  if (model.catalogOk === false) {
     pane.appendChild(
       emptyBlock(
-        "Library not found",
+        "Catalog not found",
         model.message ||
-          "Point the Library path setting (or ASSETRIZZ_LIBRARY) at an assetrizz clone that has assets/ and db/assets.db.xz."
+          "The bundled catalog is missing. Reinstall the plugin/ directory, or point Library path at a checkout that has db/assets.db.xz."
       )
     );
     return;
@@ -89,6 +89,7 @@ function side(model, actions) {
   sideEl.appendChild(searchBox(model, actions));
   sideEl.appendChild(grid(model));
   sideEl.appendChild(layers(model));
+  sideEl.appendChild(libraryPanel(model, actions));
   return sideEl;
 }
 
@@ -210,17 +211,185 @@ function layers(model) {
 function footer(model) {
   const foot = el("div", "az-foot");
   const left = el("div");
-  left.innerHTML = model.library
-    ? "Library <strong></strong>"
-    : "Library path is not set";
-  if (model.library) left.querySelector("strong").textContent = model.library;
+  const lib = model.libraryInfo || {};
+  const mode = lib.asset_mode || model.assetMode || "on_demand";
+  if (model.library) {
+    left.appendChild(document.createTextNode(mode + " · "));
+    const strong = el("strong");
+    strong.textContent = String(model.library);
+    left.appendChild(strong);
+  } else {
+    left.textContent = mode + " · on-demand cache (no local library installed)";
+  }
   const right = el("div");
-  right.textContent = model.counts
-    ? Number(model.counts.total_ok || 0).toLocaleString() + " assets"
-    : "";
+  const disk = lib.disk || {};
+  const parts = [];
+  if (model.counts) parts.push(Number(model.counts.total_ok || 0).toLocaleString() + " assets");
+  if (disk.local_label && disk.local_bytes) parts.push("local " + disk.local_label);
+  if (disk.cache_label && disk.cache_bytes) parts.push("cache " + disk.cache_label);
+  right.textContent = parts.join(" · ");
   foot.appendChild(left);
   foot.appendChild(right);
   return foot;
+}
+
+function libraryPanel(model, actions) {
+  const wrap = el("div", "az-lib");
+  wrap.appendChild(el("p", "az-section-label", "Local library"));
+  const lib = model.libraryInfo || {};
+  const job = (lib.job && typeof lib.job === "object") ? lib.job : {};
+  const running = job.status === "running" || job.status === "starting";
+  const disk = lib.disk || {};
+
+  const summary = el("p", "az-lib-summary");
+  const mode = lib.asset_mode || model.assetMode || "on_demand";
+  let summaryText = "Mode: " + mode + ". Full library is " + (lib.total_label || "about 1.6 GB") + ".";
+  if (disk.local_bytes) summaryText += " Local copy uses " + disk.local_label + ".";
+  if (disk.cache_bytes) summaryText += " On-demand cache uses " + disk.cache_label + ".";
+  summary.textContent = summaryText;
+  wrap.appendChild(summary);
+
+  if (lib.local_library_dir) {
+    const dest = el("p", "az-quiet");
+    dest.textContent = "Download folder: " + String(lib.local_library_dir);
+    wrap.appendChild(dest);
+  }
+
+  const packs = Array.isArray(lib.packs) ? lib.packs : [];
+  const selected = model.selectedPacks && typeof model.selectedPacks === "object" ? model.selectedPacks : {};
+  const list = el("div", "az-packs");
+  packs.forEach(function (pack) {
+    if (!pack || !pack.name) return;
+    const row = el("label", "az-pack");
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.value = pack.name;
+    box.checked = selected[pack.name] === true;
+    box.disabled = running;
+    box.addEventListener("change", function () {
+      if (actions && typeof actions.onTogglePack === "function") {
+        actions.onTogglePack(pack.name, box.checked);
+      }
+    });
+    row.appendChild(box);
+    const meta = el("span");
+    const have = pack.downloaded ? " · " + pack.downloaded + "/" + pack.count + " on disk" : "";
+    meta.textContent = pack.name + " · " + (pack.label || "") + " · " + Number(pack.count || 0).toLocaleString() + " PNGs" + have;
+    row.appendChild(meta);
+    list.appendChild(row);
+  });
+  if (packs.length) wrap.appendChild(list);
+
+  const buttons = el("div", "az-lib-actions");
+  const downloadAll = el("button", "az-btn");
+  downloadAll.type = "button";
+  downloadAll.textContent = "Download library (" + (lib.total_label || "1.6 GB") + ")";
+  downloadAll.disabled = running;
+  downloadAll.addEventListener("click", function () {
+    if (actions && typeof actions.onDownload === "function") actions.onDownload(["*"]);
+  });
+  const downloadSel = el("button", "az-btn az-btn-ghost");
+  downloadSel.type = "button";
+  downloadSel.textContent = "Download selected packs";
+  downloadSel.disabled = running;
+  downloadSel.addEventListener("click", function () {
+    const names = [];
+    Object.keys(selected).forEach(function (name) {
+      if (selected[name]) names.push(name);
+    });
+    if (!names.length) return;
+    if (actions && typeof actions.onDownload === "function") actions.onDownload(names);
+  });
+  buttons.appendChild(downloadAll);
+  buttons.appendChild(downloadSel);
+  wrap.appendChild(buttons);
+
+  if (running || job.status === "done" || job.status === "cancelled" || job.status === "error") {
+    const progress = el("div", "az-progress");
+    const total = Number(job.total || 0);
+    const done = Number(job.done || 0);
+    const pct = total ? Math.min(100, Math.round((done / total) * 100)) : (running ? 0 : 100);
+    const bar = el("div", "az-progress-bar");
+    const fill = el("div", "az-progress-fill");
+    fill.style.width = String(pct) + "%";
+    bar.appendChild(fill);
+    progress.appendChild(bar);
+    const label = el("p", "az-quiet");
+    label.textContent = (job.message || job.status || "") + (total ? " (" + done + "/" + total + ")" : "");
+    progress.appendChild(label);
+    if (running) {
+      const cancel = el("button", "az-btn az-btn-ghost");
+      cancel.type = "button";
+      cancel.textContent = "Cancel";
+      cancel.addEventListener("click", function () {
+        if (actions && typeof actions.onCancel === "function") actions.onCancel();
+      });
+      progress.appendChild(cancel);
+    }
+    wrap.appendChild(progress);
+  }
+
+  const danger = el("div", "az-lib-danger");
+  if (model.removeConfirm) {
+    const warn = el("p", "az-warn");
+    warn.textContent = "Delete the local library at " + String(lib.local_library_dir || "the configured folder") + "? This cannot be undone. The source checkout will not be deleted.";
+    danger.appendChild(warn);
+    const confirm = el("button", "az-btn az-btn-danger");
+    confirm.type = "button";
+    confirm.textContent = "Confirm delete";
+    confirm.addEventListener("click", function () {
+      if (actions && typeof actions.onRemove === "function") actions.onRemove(true);
+    });
+    const abort = el("button", "az-btn az-btn-ghost");
+    abort.type = "button";
+    abort.textContent = "Keep library";
+    abort.addEventListener("click", function () {
+      if (actions && typeof actions.onRemove === "function") actions.onRemove(false);
+    });
+    danger.appendChild(confirm);
+    danger.appendChild(abort);
+  } else {
+    const remove = el("button", "az-btn az-btn-ghost");
+    remove.type = "button";
+    remove.textContent = "Remove local library";
+    remove.disabled = running || lib.can_remove === false;
+    remove.title = lib.remove_blocked_reason || "";
+    remove.addEventListener("click", function () {
+      if (actions && typeof actions.onAskRemove === "function") actions.onAskRemove();
+    });
+    danger.appendChild(remove);
+  }
+
+  if (model.cacheConfirm) {
+    const warn = el("p", "az-warn");
+    warn.textContent = "Clear the on-demand cache (" + ((lib.disk && lib.disk.cache_label) || "cached PNGs") + ")?";
+    danger.appendChild(warn);
+    const confirm = el("button", "az-btn az-btn-danger");
+    confirm.type = "button";
+    confirm.textContent = "Confirm clear cache";
+    confirm.addEventListener("click", function () {
+      if (actions && typeof actions.onClearCache === "function") actions.onClearCache(true);
+    });
+    const abort = el("button", "az-btn az-btn-ghost");
+    abort.type = "button";
+    abort.textContent = "Keep cache";
+    abort.addEventListener("click", function () {
+      if (actions && typeof actions.onClearCache === "function") actions.onClearCache(false);
+    });
+    danger.appendChild(confirm);
+    danger.appendChild(abort);
+  } else {
+    const clear = el("button", "az-btn az-btn-ghost");
+    clear.type = "button";
+    clear.textContent = "Clear on-demand cache";
+    clear.disabled = running || !(disk.cache_bytes);
+    clear.addEventListener("click", function () {
+      if (actions && typeof actions.onAskClearCache === "function") actions.onAskClearCache();
+    });
+    danger.appendChild(clear);
+  }
+  wrap.appendChild(danger);
+  return wrap;
 }
 
 function emptyBlock(title, copy) {

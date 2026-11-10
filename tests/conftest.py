@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import sqlite3
 import sys
+import hashlib
 from pathlib import Path
 
 import pytest
@@ -38,7 +39,8 @@ CREATE TABLE assets (
   frame_info TEXT,
   license TEXT,
   status TEXT,
-  qa_notes TEXT
+  qa_notes TEXT,
+  sha256 TEXT
 );
 CREATE VIRTUAL TABLE assets_fts USING fts5(
   slug, description, tags, subject, category, subcategory, style_pack,
@@ -172,7 +174,16 @@ def plugin_env(tmp_path, monkeypatch):
     ]
     # The cozy cartoon row has no file — used to test missing-file errors on place? 
     # Skip writing that PNG so get() can report exists=false; place should fail.
+    def _file_hash(rel: str) -> str | None:
+        path = library / rel
+        if not path.is_file():
+            return None
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
     for row in rows:
+        digest = _file_hash(row["path"])
+        if digest:
+            row["sha256"] = digest
         _insert(conn, **row)
     conn.commit()
     conn.close()
@@ -181,10 +192,20 @@ def plugin_env(tmp_path, monkeypatch):
 
     monkeypatch.setenv("ASSETRIZZ_LIBRARY", str(library))
     monkeypatch.setenv("ASSETRIZZ_HOME", str(data))
+    monkeypatch.setenv("ASSETRIZZ_OFFLINE", "1")
+    monkeypatch.setenv("ASSETRIZZ_ASSET_MODE", "on_demand")
     monkeypatch.delenv("ASSETRIZZ_EXPORT_DIR", raising=False)
+    monkeypatch.delenv("ASSETRIZZ_ASSET_REF", raising=False)
+    monkeypatch.delenv("ASSETRIZZ_LOCAL_LIBRARY", raising=False)
 
+    from assetrizz_plugin.fetch import set_fetcher
     from assetrizz_plugin.library import reset_cache
 
+    def _forbidden_fetch(url: str) -> bytes:
+        raise AssertionError(f"test tried to fetch {url} without a mock fetcher")
+
+    set_fetcher(_forbidden_fetch)
     reset_cache()
     yield {"library": library, "data": data, "assets": assets}
+    set_fetcher(None)
     reset_cache()

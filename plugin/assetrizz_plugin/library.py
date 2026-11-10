@@ -1,4 +1,4 @@
-"""Search and inspect assets in the local library (FTS5, auto-restore from .xz)."""
+"""Search and inspect assets (FTS5). Catalog may be bundled; PNGs may be fetched."""
 
 from __future__ import annotations
 
@@ -11,8 +11,24 @@ import threading
 from pathlib import Path
 from typing import Any
 
-from assetrizz_plugin.config import ConfigError, library_assets_root, resolve_library
-from assetrizz_plugin.paths import PathError, confine, data_home, relative_posix, require_non_root
+from assetrizz_plugin import BUNDLED_DB_SHA256
+from assetrizz_plugin.config import (
+    ConfigError,
+    asset_mode,
+    local_library_dir,
+    resolve_library,
+    resolve_library_optional,
+)
+from assetrizz_plugin.errors import LibraryError
+from assetrizz_plugin.paths import (
+    PathError,
+    confine,
+    data_home,
+    ensure_layout,
+    refuse_denied_write,
+    relative_posix,
+    require_non_root,
+)
 
 _FTS_TOKEN = re.compile(r"[A-Za-z0-9_]+")
 _SLUG_OK = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_./-]{0,240}$")
@@ -40,30 +56,100 @@ _GET_FIELDS = _SEARCH_FIELDS + (
     "frame_info",
     "license",
     "thumb_path",
+    "sha256",
 )
 _DESC_LIMIT = 180
 _TAG_LIMIT = 12
 _LIMIT_MAX = 50
 _LIMIT_DEFAULT = 20
+_CTRL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
+
+def sanitize_text(value, *, max_len: int | None = None):
+    """Strip control characters and newlines from untrusted catalog text.
+
+    Asset names, tags, and descriptions are treated as data, never as
+    instructions, even though they come from the local library.
+    """
+    if value is None:
+        return value
+    if not isinstance(value, str):
+        return value
+    text = _CTRL.sub("", value).replace("\r", " ").replace("\n", " ")
+    text = " ".join(text.split())
+    if max_len is not None and len(text) > max_len:
+        text = text[: max_len - 1].rstrip() + "…"
+    return text
+
+
+def sanitize_tags(value, *, limit: int = _TAG_LIMIT):
+    if not isinstance(value, list):
+        if isinstance(value, str):
+            return [sanitize_text(value, max_len=80)] if value else []
+        return []
+    out = []
+    for item in value:
+        cleaned = sanitize_text(str(item), max_len=80) if item is not None else ""
+        if cleaned:
+            out.append(cleaned)
+        if len(out) >= limit:
+            break
+    return out
 
 _LOCK = threading.Lock()
 _DB_PATH: Path | None = None
 _LIBRARY: Path | None = None
+_LIBRARY_READY = False
 
 
-class LibraryError(ValueError):
-    def __init__(self, message: str, *, code: str = "library_error", fix: str = "") -> None:
-        super().__init__(message)
-        self.code = code
-        self.fix = fix
 
 
 def reset_cache() -> None:
     """Drop cached library/db paths (tests)."""
-    global _DB_PATH, _LIBRARY
+    global _DB_PATH, _LIBRARY, _LIBRARY_READY
     with _LOCK:
         _DB_PATH = None
         _LIBRARY = None
+        _LIBRARY_READY = False
+
+
+def cache_root() -> Path:
+    root = ensure_layout() / "cache"
+    root.mkdir(parents=True, exist_ok=True)
+    return require_non_root(root, label="cache")
+
+
+def plugin_root() -> Path:
+    """Installable plugin directory (the folder that contains plugin.yaml)."""
+    return Path(__file__).resolve().parent.parent
+
+
+def bundled_catalog_xz() -> Path:
+    return plugin_root() / "db" / "assets.db.xz"
+
+
+def sha256_file(path: Path) -> str:
+    import hashlib
+
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        while True:
+            chunk = handle.read(1024 * 1024)
+            if not chunk:
+                break
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def verify_file_sha256(path: Path, expected: str, *, label: str = "file") -> str:
+    got = sha256_file(path)
+    if got != expected.strip().lower():
+        raise LibraryError(
+            f"SHA-256 of {label} did not match the pin.",
+            code="hash_mismatch",
+            fix="Delete the bad file and restore or download it again. Do not use a mismatched copy.",
+        )
+    return got
 
 
 def _writable_dir(path: Path) -> bool:
@@ -101,6 +187,9 @@ def restore_db(library: Path, dest_fallback: Path) -> Path:
         dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file():
         return dest
+    from assetrizz_plugin.paths import refuse_denied_write
+
+    refuse_denied_write(dest, label="catalog db")
     tmp = dest.with_name(dest.name + ".partial")
     try:
         with lzma.open(xz, "rb") as src, open(tmp, "wb") as out:
@@ -117,23 +206,77 @@ def restore_db(library: Path, dest_fallback: Path) -> Path:
     return dest
 
 
-def current_library() -> Path:
-    global _LIBRARY
+def restore_catalog_xz(xz: Path, dest: Path, expected_sha256: str) -> Path:
+    """Decompress a pinned catalog snapshot into dest (never overwrite an existing db)."""
+    dest = dest.expanduser()
+    if dest.is_file():
+        return dest
+    xz = require_non_root(Path(xz), label="catalog snapshot")
+    if not xz.is_file():
+        raise LibraryError(
+            f"No catalog snapshot at {xz}.",
+            code="library_missing",
+            fix="Reinstall the plugin so plugin/db/assets.db.xz is present, or set a local library.",
+        )
+    verify_file_sha256(xz, expected_sha256, label="bundled catalog snapshot")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    refuse_denied_write(dest, label="catalog db")
+    tmp = dest.with_name(dest.name + ".partial")
+    try:
+        with lzma.open(xz, "rb") as src, open(tmp, "wb") as out:
+            while True:
+                chunk = src.read(1024 * 1024)
+                if not chunk:
+                    break
+                out.write(chunk)
+        os.replace(tmp, dest)
+    except Exception:
+        if tmp.exists():
+            tmp.unlink(missing_ok=True)
+        raise
+    return dest
+
+
+def restore_bundled_catalog(dest: Path | None = None) -> Path:
+    dest = dest if dest is not None else data_home() / "catalog" / "assets.db"
+    return restore_catalog_xz(bundled_catalog_xz(), dest, BUNDLED_DB_SHA256)
+
+
+def current_library_optional() -> Path | None:
+    global _LIBRARY, _LIBRARY_READY
     with _LOCK:
-        if _LIBRARY is not None and _LIBRARY.is_dir():
+        if _LIBRARY_READY:
             return _LIBRARY
-        _LIBRARY = resolve_library()
+        _LIBRARY = resolve_library_optional()
+        _LIBRARY_READY = True
         return _LIBRARY
 
 
+def current_library() -> Path:
+    found = current_library_optional()
+    if found is None:
+        raise ConfigError(
+            "No complete local assetrizz library is installed.",
+            code="library_missing",
+            fix="Leave asset_mode at on_demand, or download a local library from the Assetrizz pane.",
+        )
+    return found
+
+
 def current_db() -> Path:
-    global _DB_PATH, _LIBRARY
+    global _DB_PATH, _LIBRARY, _LIBRARY_READY
     with _LOCK:
         if _DB_PATH is not None and _DB_PATH.is_file():
             return _DB_PATH
-        library = _LIBRARY or resolve_library()
-        _LIBRARY = library
-        _DB_PATH = restore_db(library, data_home() / "assets.db")
+        if not _LIBRARY_READY:
+            _LIBRARY = resolve_library_optional()
+            _LIBRARY_READY = True
+        library = _LIBRARY
+        dest = data_home() / "catalog" / "assets.db"
+        if library is not None:
+            _DB_PATH = restore_db(library, dest)
+        else:
+            _DB_PATH = restore_bundled_catalog(dest)
         return _DB_PATH
 
 
@@ -170,14 +313,22 @@ def _decode(row: sqlite3.Row, fields: tuple[str, ...], *, compact: bool) -> dict
                 data[key] = json.loads(raw)
             except json.JSONDecodeError:
                 pass
+    # Catalog text is untrusted data (tags, names, descriptions).
+    if "description" in data:
+        data["description"] = sanitize_text(data.get("description") or "", max_len=_DESC_LIMIT if compact else 2000)
+    if "tags" in data:
+        data["tags"] = sanitize_tags(data.get("tags") or [], limit=_TAG_LIMIT if compact else 40)
+    for key in ("subject", "category", "subcategory", "style_pack", "slug", "style"):
+        if key in data and isinstance(data[key], str):
+            data[key] = sanitize_text(data[key], max_len=240)
     if compact:
-        desc = data.get("description")
-        if isinstance(desc, str) and len(desc) > _DESC_LIMIT:
-            data["description"] = desc[: _DESC_LIMIT - 1].rstrip() + "…"
-        tags = data.get("tags")
-        if isinstance(tags, list) and len(tags) > _TAG_LIMIT:
-            data["tags"] = tags[:_TAG_LIMIT]
         data.pop("qa_notes", None)
+    elif "qa_notes" in data:
+        notes = data.get("qa_notes")
+        if isinstance(notes, list):
+            data["qa_notes"] = [sanitize_text(str(n), max_len=240) for n in notes[:8]]
+        elif isinstance(notes, str):
+            data["qa_notes"] = sanitize_text(notes, max_len=240)
     # Normalize flags
     if "has_alpha" in data:
         data["has_alpha"] = bool(data["has_alpha"])
@@ -196,43 +347,156 @@ def _decode(row: sqlite3.Row, fields: tuple[str, ...], *, compact: bool) -> dict
 
 
 def asset_relative_path(stored: str) -> str:
-    """Return a repo-relative ``assets/...`` path confined to the library."""
-    library = current_library()
-    assets = library_assets_root(library)
-    raw = (stored or "").strip().replace("\\", "/")
-    if not raw:
-        raise LibraryError("Asset has no path.", code="not_found", fix="Search again and use a slug or id.")
-    # Historical pipeline paths used library/...; rewrite to assets/...
-    if raw.startswith("library/"):
-        raw = "assets/" + raw[len("library/") :]
-    if raw.startswith("/"):
-        # Absolute paths must still resolve under the library.
-        confined = confine(raw, library, label="asset path")
-        return relative_posix(confined, library)
-    if raw.startswith("assets/"):
-        confined = confine(library / raw, library, label="asset path")
-        return relative_posix(confined, library)
-    confined = confine(assets / raw, assets, label="asset path")
-    return "assets/" + relative_posix(confined, assets)
+    """Return a repo-relative ``assets/...png`` path. No library root required."""
+    from assetrizz_plugin.fetch import normalize_asset_rel
+
+    return normalize_asset_rel(stored)
 
 
-def asset_file(stored: str) -> Path:
-    library = current_library()
-    rel = asset_relative_path(stored)
-    path = confine(library / rel, library, label="asset file")
+def cache_path_for(rel: str) -> Path:
+    rel = asset_relative_path(rel)
+    root = cache_root()
+    path = confine(root / rel, root, label="cached asset")
     if path.suffix.lower() != ".png":
         raise LibraryError(
             "Only PNG assets from the library can be opened.",
             code="invalid_args",
             fix="Pass a library slug or id, not an arbitrary file path.",
         )
+    return path
+
+
+def _valid_png(path: Path, expected: str | None, *, delete_bad: bool) -> Path | None:
     if not path.is_file():
+        return None
+    if path.suffix.lower() != ".png":
+        return None
+    if not expected:
+        return path
+    try:
+        digest = sha256_file(path)
+    except OSError:
+        return None
+    if digest == expected.strip().lower():
+        return path
+    if delete_bad:
+        try:
+            path.unlink()
+        except OSError:
+            pass
+    return None
+
+
+def locate_asset_file(stored: str, expected_sha256: str | None = None) -> Path | None:
+    """Return a local PNG if present (library, local download, or cache). Never fetches."""
+    rel = asset_relative_path(stored)
+    expected = (expected_sha256 or "").strip().lower() or None
+    library = current_library_optional()
+    if library is not None:
+        try:
+            found = _valid_png(
+                confine(library / rel, library, label="asset file"),
+                expected,
+                delete_bad=False,
+            )
+        except PathError:
+            found = None
+        if found is not None:
+            return found
+    try:
+        local = local_library_dir()
+    except PathError:
+        local = None
+    if local is not None and local.is_dir() and (library is None or local != library):
+        try:
+            confined = confine(local / rel, local, label="local library asset")
+        except PathError:
+            confined = None
+        if confined is not None:
+            found = _valid_png(confined, expected, delete_bad=False)
+            if found is not None:
+                return found
+    try:
+        found = _valid_png(cache_path_for(rel), expected, delete_bad=True)
+    except (LibraryError, PathError):
+        found = None
+    return found
+
+
+def lookup_sha256(stored: str) -> str | None:
+    """SHA-256 from the catalog for this asset path, if the column is present."""
+    rel = asset_relative_path(stored)
+    conn = connect()
+    try:
+        try:
+            row = conn.execute(
+                "SELECT sha256 FROM assets WHERE path = ? OR path = ? LIMIT 1",
+                (rel, rel[len("assets/") :]),
+            ).fetchone()
+        except Exception:
+            return None
+    finally:
+        conn.close()
+    if row is None:
+        return None
+    value = row["sha256"] if "sha256" in row.keys() else None
+    if isinstance(value, str) and len(value.strip()) == 64:
+        return value.strip().lower()
+    return None
+
+
+def _atomic_write_bytes(dest: Path, data: bytes, expected_sha256: str) -> Path:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    refuse_denied_write(dest, label="asset file")
+    tmp = dest.with_name(dest.name + ".partial")
+    try:
+        with open(tmp, "wb") as handle:
+            handle.write(data)
+        from assetrizz_plugin.fetch import sha256_bytes
+
+        if sha256_bytes(data) != expected_sha256.strip().lower():
+            raise LibraryError(
+                "SHA-256 of the downloaded PNG did not match the catalog.",
+                code="hash_mismatch",
+                fix="Delete the cached file if any, then retry. Do not use a mismatched file.",
+            )
+        os.replace(tmp, dest)
+    except Exception:
+        if tmp.exists():
+            tmp.unlink(missing_ok=True)
+        raise
+    return dest
+
+
+def ensure_asset_file(stored: str, expected_sha256: str | None = None) -> Path:
+    """Return a usable PNG, fetching one allowlisted file when the mode allows it."""
+    from assetrizz_plugin.fetch import asset_url, fetch_url
+
+    rel = asset_relative_path(stored)
+    expected = (expected_sha256 or lookup_sha256(rel) or "").strip().lower() or None
+    found = locate_asset_file(rel, expected)
+    if found is not None:
+        return found
+    if not expected:
         raise LibraryError(
             f"Asset file is missing: {rel}",
             code="not_found",
-            fix="Restore the library checkout so assets/ is complete.",
+            fix="Place a verified local copy, or use a catalog snapshot that includes sha256 so the file can be fetched.",
         )
-    return path
+    mode = asset_mode()
+    if mode == "local":
+        root = local_library_dir()
+        root.mkdir(parents=True, exist_ok=True)
+        dest = confine(root / rel, root, label="local library asset")
+    else:
+        dest = cache_path_for(rel)
+    data = fetch_url(asset_url(rel), expected_sha256=expected)
+    return _atomic_write_bytes(dest, data, expected)
+
+
+def asset_file(stored: str, expected_sha256: str | None = None) -> Path:
+    """Return a confined on-disk PNG, fetching it on demand when allowed."""
+    return ensure_asset_file(stored, expected_sha256)
 
 
 def _parse_limit(value: Any, default: int = _LIMIT_DEFAULT) -> int:
@@ -425,14 +689,14 @@ def search_like(
 def get_asset(*, asset_id: int | None = None, slug: str | None = None) -> dict[str, Any]:
     row = _fetch_asset(asset_id=asset_id, slug=slug)
     data = _decode(row, _GET_FIELDS, compact=False)
+    stored = data.get("path") or f"assets/{data.get('slug')}.png"
+    expected = data.get("sha256") if isinstance(data.get("sha256"), str) else None
     try:
-        data["exists"] = asset_file(data.get("path") or data["slug"] + ".png").is_file()
+        located = locate_asset_file(stored, expected)
     except (LibraryError, PathError, KeyError):
-        # Try slug-derived path if the stored path is odd.
-        try:
-            data["exists"] = asset_file("assets/" + str(data.get("slug")) + ".png").is_file()
-        except Exception:
-            data["exists"] = False
+        located = None
+    data["exists"] = located is not None
+    data["source"] = "local" if located is not None else "missing"
     return {"ok": True, "asset": data}
 
 
@@ -470,7 +734,8 @@ def resolve_asset(*, asset_id: int | None = None, slug: str | None = None) -> di
     row = _fetch_asset(asset_id=asset_id, slug=slug)
     data = _decode(row, _GET_FIELDS, compact=False)
     stored = data.get("path") or f"assets/{data['slug']}.png"
-    data["file"] = str(asset_file(stored))
+    expected = data.get("sha256") if isinstance(data.get("sha256"), str) else None
+    data["file"] = str(ensure_asset_file(stored, expected))
     data["path"] = asset_relative_path(stored)
     return data
 
@@ -489,7 +754,7 @@ def _clean_slug(slug: str) -> str:
 
 
 def stats() -> dict[str, Any]:
-    library = current_library()
+    library = current_library_optional()
     db_path = current_db()
     conn = connect()
     try:
@@ -515,7 +780,9 @@ def stats() -> dict[str, Any]:
         conn.close()
     return {
         "ok": True,
-        "library": str(library),
+        "library": str(library) if library is not None else None,
+        "asset_mode": asset_mode(),
+        "catalog": "local" if library is not None else "bundled",
         "db": str(db_path),
         "total_ok": total_ok,
         "total_rejected": total_rejected,

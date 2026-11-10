@@ -11,7 +11,8 @@ from typing import Any, Callable
 
 from assetrizz_plugin import PLUGIN_ID, SKILL_ID, TOOLSET, __version__
 from assetrizz_plugin.config import ConfigError
-from assetrizz_plugin.library import LibraryError, get_asset, parse_search_args, search, stats
+from assetrizz_plugin.errors import LibraryError
+from assetrizz_plugin.library import get_asset, parse_search_args, search, stats
 from assetrizz_plugin.paths import PathError
 from assetrizz_plugin.register_util import call_register_tool
 from assetrizz_plugin.scene import (
@@ -70,19 +71,22 @@ CODE_FIX = {
     Code.NOT_FOUND: "Search the library or list scenes, then use a returned id or slug.",
     Code.PATH_ESCAPE: "Stay inside the library or the plugin data / export directory.",
     Code.LIBRARY_MISSING: (
-        "Clone https://github.com/mojomast/assetrizz and set the Library path "
-        "setting or ASSETRIZZ_LIBRARY to that folder."
+        "Search still works from the bundled catalog. Leave asset_mode at on_demand, "
+        "or click Download library in the Assetrizz pane (or run python -m assetrizz_plugin.cli download)."
     ),
-    Code.LIBRARY_ERROR: "Check the library checkout and restore db/assets.db.xz if needed.",
+    Code.LIBRARY_ERROR: "Check the bundled catalog, the on-demand cache, or your local library download.",
     Code.NO_SCENE: "Call assetrizz_scene op=create with width and height first.",
     Code.PAYLOAD_TOO_LARGE: "Use the PNG path on disk; do not embed the full image in the tool result.",
+    "offline": "Use a local library or cache, or set asset_mode to on_demand or local.",
+    "hash_mismatch": "Delete the bad file and retry the download. Do not use a mismatched copy.",
+    "fetch_failed": "Retry the on-demand fetch, or install a local library from the pane.",
     Code.INTERNAL: "Retry the call. If it still fails, run the plugin doctor and inspect the error code.",
 }
 
 SCHEMA_SEARCH = {
     "name": "assetrizz_search",
     "description": (
-        "Search the local assetrizz 2D game-asset library (FTS over slugs, tags, "
+        "Search the assetrizz 2D game-asset catalog (FTS over slugs, tags, "
         "descriptions, subjects, styles, categories). op=search filters; op=get "
         "returns one asset by id or slug; op=stats returns library counts. "
         "Does not compose scenes — use assetrizz_scene for that. If deferred, "
@@ -126,9 +130,10 @@ SCHEMA_SCENE = {
         "Compose a 2D scene from library assets only. Ops: create, place, move, "
         "scale, flip, layer (z-order), remove, tile (fill a rect), list, clear, "
         "render (PNG under the export dir), save, load. Assets must come from "
-        "assetrizz_search — no arbitrary file paths. render returns a filesystem "
-        "path, not a full PNG. The Desktop/dashboard pane live-previews the current "
-        "scene. If deferred, "
+        "assetrizz_search — no arbitrary file paths. Missing PNGs are fetched "
+        "on demand (pinned tag, SHA-256 verified) unless asset_mode is offline. "
+        "render returns a filesystem path, not a full PNG. The Desktop pane "
+        "live-previews the current scene and is where you download a local library. If deferred, "
         f'tool_search(["assetrizz"]) or skill_view("{SKILL_ID}").'
     ),
     "parameters": {

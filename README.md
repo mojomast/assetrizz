@@ -191,23 +191,22 @@ The `pipeline/query.py` and `pipeline/serve.py` CLIs talk to a database file nex
 
 ## Hermes plugin: search and compose
 
-The [`plugin/`](plugin/) directory is a native Hermes plugin. The agent searches the library and composes scenes; you can watch the current scene in a dark Desktop pane.
+The [`plugin/`](plugin/) directory is a native Hermes plugin. The agent searches the catalog and composes scenes; you can watch the current scene in a dark Desktop pane. A 4.7 MB compressed catalog is bundled, so search works after installing `plugin/` alone.
 
 Install **only** that directory — a root install is refused so Hermes does not copy the 1.65 GB asset tree into the plugins folder:
 
 ```bash
-git clone https://github.com/mojomast/assetrizz
 hermes plugins install mojomast/assetrizz/plugin
 ```
 
-Point **Settings → Plugins → assetrizz → Library path** (or `ASSETRIZZ_LIBRARY`) at the checkout if it is not auto-detected. The folder must contain `assets/` and `db/assets.db.xz`. The first search decompresses the catalog automatically; you can also run `bash db/restore.sh`.
+**Asset modes:** `on_demand` (default) fetches a single pinned, SHA-256-verified PNG from GitHub raw when you place, render, or preview it; `local` uses a library you download once (full tree or chosen style packs) into a directory you pick; `offline` never touches the network and needs the file on disk. Bulk downloads are user-initiated only — click **Download library** in the pane (size estimate, progress, cancel) or run `python -m assetrizz_plugin.cli`. That is not a model tool. Optional `library_path` / `ASSETRIZZ_LIBRARY` still prefers a complete checkout when you already have one.
 
 Tools:
 
 - `assetrizz_search` — `op=search`, `op=get`, `op=stats` (FTS over slugs, tags, descriptions, styles, categories)
 - `assetrizz_scene` — `op=create`, `place`, `tile`, `move`, `scale`, `flip`, `layer`, `remove`, `list`, `clear`, `render`, `save`, `load`
 
-Skill id for `skill_view`: `assetrizz:assetrizz-composer`. Hermes `>=0.23.0` is required for the pane (`ctx.rest`). The two tools still run when the pane is unavailable. Render writes a PNG under the plugin data / export directory; the tool result is a path, not an embedded image. Assets can only be read from the library root.
+Skill id for `skill_view`: `assetrizz:assetrizz-composer`. Hermes `>=0.23.0` is required for the pane (`ctx.rest`). The two tools still run when the pane is unavailable. Render writes a PNG under the plugin data / export directory; the tool result is a path, not an embedded image.
 
 An example scene composed from real `pixel_32` tiles, trees, a roadside inn, a ranger, and a hare:
 

@@ -72,6 +72,41 @@ if APIRouter is not None:
             body = {}
         name = (body or {}).get("name") or (body or {}).get("scene")
         return pane.scene_view(name)
+
+    @router.get("/library/status")
+    def route_library_status():
+        return pane.library_view()
+
+    @router.post("/library/download")
+    async def route_library_download(request: Request):
+        body = {}
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        return pane.library_download(body or {})
+
+    @router.post("/library/cancel")
+    async def route_library_cancel(request: Request):
+        return pane.library_cancel()
+
+    @router.post("/library/remove")
+    async def route_library_remove(request: Request):
+        body = {}
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        return pane.library_remove(body or {})
+
+    @router.post("/library/clear-cache")
+    async def route_library_clear_cache(request: Request):
+        body = {}
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        return pane.library_clear_cache(body or {})
 else:  # pragma: no cover
     router = None
 

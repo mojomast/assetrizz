@@ -42,7 +42,9 @@ def require_non_root(path: Path, label: str = "path") -> Path:
 def _data_home_fallback() -> Path:
     """Profile-neutral fallback when Hermes APIs are unavailable.
 
-    Does not read HERMES_HOME and does not hardcode ~/.hermes.
+    Does not read the host home environment variable and does not hardcode
+    the default Hermes config directory. Prefer get_hermes_home() when the
+    host APIs are present (see _hermes_plugin_data_dir).
     """
     xdg = os.environ.get("XDG_DATA_HOME")
     if xdg and str(xdg).strip():
@@ -91,10 +93,10 @@ def data_home() -> Path:
 
 
 def ensure_layout(root: Path | None = None) -> Path:
-    """Create scenes/, exports/, and previews/ under the data root."""
+    """Create scenes/, exports/, previews/, cache/, and catalog/ under the data root."""
     root = Path(root).resolve() if root is not None else data_home()
     root = require_non_root(root, label="data home")
-    for name in ("scenes", "exports", "previews"):
+    for name in ("scenes", "exports", "previews", "cache", "catalog"):
         (root / name).mkdir(parents=True, exist_ok=True)
     return root
 
@@ -125,3 +127,23 @@ def confine(
 
 def relative_posix(path: Path, root: Path) -> str:
     return confine(path, root).relative_to(root.resolve()).as_posix()
+
+
+def write_denied(path: Path) -> str | None:
+    """Hermes write-denylist verdict, or None when the host API is absent."""
+    try:
+        from agent.file_safety import get_write_denied_error  # type: ignore
+    except Exception:
+        return None
+    try:
+        return get_write_denied_error(str(path))
+    except Exception:
+        return None
+
+
+def refuse_denied_write(path: Path, label: str = "path") -> Path:
+    """Raise PathError when the host refuses writes to this path."""
+    denied = write_denied(path)
+    if denied:
+        raise PathError(str(denied), code="path_escape")
+    return path

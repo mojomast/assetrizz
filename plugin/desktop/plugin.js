@@ -5,7 +5,7 @@ import { host } from "@hermes/plugin-sdk";
 import { jsx } from "react/jsx-runtime";
 import { useEffect, useRef, useState } from "react";
 
-const PANE_CSS = "/* Dark mode is always on. Do not follow a light host theme. */\n.az-host {\n  height: 100%;\n  min-height: 0;\n  background: #0e0d12;\n  color: #e8e4f0;\n}\n\n.az {\n  box-sizing: border-box;\n  height: 100%;\n  min-height: 0;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n  gap: 0;\n  padding: 0;\n  font: 13px/1.45 ui-sans-serif, system-ui, sans-serif;\n  color: #e8e4f0;\n  background: #0e0d12;\n}\n\n.az *,\n.az *::before,\n.az *::after {\n  box-sizing: border-box;\n}\n\n.az-top {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  padding: 12px 14px 10px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-brand {\n  display: flex;\n  gap: 10px;\n  min-width: 0;\n  align-items: center;\n}\n\n.az-mark {\n  width: 22px;\n  height: 22px;\n  flex: none;\n  border-radius: 6px;\n  border: 1.5px solid #f0c14b;\n  background:\n    linear-gradient(135deg, #2a2238 50%, transparent 50%),\n    #16151c;\n  position: relative;\n}\n\n.az-mark::after {\n  content: \"\";\n  position: absolute;\n  right: 4px;\n  bottom: 4px;\n  width: 7px;\n  height: 7px;\n  background: #f0c14b;\n  border-radius: 1px;\n}\n\n.az-kicker {\n  margin: 0;\n  font-size: 10px;\n  letter-spacing: 0.14em;\n  text-transform: uppercase;\n  color: #8b8698;\n}\n\n.az-title {\n  margin: 1px 0 0;\n  font-size: 16px;\n  font-weight: 600;\n  letter-spacing: -0.02em;\n  color: #f4f1fa;\n}\n\n.az-live {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  flex: none;\n  padding: 3px 9px;\n  border: 1px solid #2a2833;\n  border-radius: 999px;\n  color: #b7b3c2;\n  font-size: 11px;\n  background: #16151c;\n}\n\n.az-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 99px;\n  background: #5c5868;\n}\n\n.az-live.is-live .az-dot,\n.az-live.is-ready .az-dot {\n  background: #f0c14b;\n}\n\n.az-live.is-live .az-dot {\n  animation: az-pulse 1.4s ease-in-out infinite;\n}\n\n.az-live.is-offline .az-dot,\n.az-live.is-error .az-dot {\n  background: #e77888;\n}\n\n@keyframes az-pulse {\n  0%, 100% { opacity: 0.35; }\n  50% { opacity: 1; }\n}\n\n.az-body {\n  min-height: 0;\n  display: grid;\n  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.9fr);\n  gap: 0;\n}\n\n.az-stage {\n  min-width: 0;\n  min-height: 0;\n  display: flex;\n  flex-direction: column;\n  border-right: 1px solid #2a2833;\n  background: #121119;\n}\n\n.az-canvas {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  place-items: center;\n  overflow: auto;\n  padding: 16px;\n  background-color: #121119;\n  background-image:\n    linear-gradient(45deg, #1a1820 25%, transparent 25%),\n    linear-gradient(-45deg, #1a1820 25%, transparent 25%),\n    linear-gradient(45deg, transparent 75%, #1a1820 75%),\n    linear-gradient(-45deg, transparent 75%, #1a1820 75%);\n  background-size: 24px 24px;\n  background-position: 0 0, 0 12px, 12px -12px, -12px 0;\n}\n\n.az-canvas img,\n.az-fallback {\n  display: block;\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n  image-rendering: pixelated;\n  border: 1px solid #2a2833;\n  border-radius: 8px;\n  background: #0e0d12;\n}\n\n.az-fallback {\n  min-width: 220px;\n  min-height: 140px;\n  display: grid;\n  place-items: center;\n  padding: 18px;\n  color: #8b8698;\n  font-size: 12px;\n  text-align: center;\n  image-rendering: auto;\n}\n\n.az-side {\n  min-width: 0;\n  min-height: 0;\n  display: grid;\n  grid-template-rows: auto auto 1fr;\n  background: #14131a;\n  overflow: hidden;\n}\n\n.az-search {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  padding: 12px 12px 8px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-search input,\n.az-search select {\n  width: 100%;\n  border: 1px solid #2a2833;\n  background: #0e0d12;\n  color: #e8e4f0;\n  border-radius: 8px;\n  padding: 7px 9px;\n  font: inherit;\n  outline: none;\n}\n\n.az-search input:focus,\n.az-search select:focus {\n  border-color: #f0c14b;\n}\n\n.az-filters {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 6px;\n}\n\n.az-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));\n  gap: 6px;\n  padding: 8px 12px;\n  overflow: auto;\n  min-height: 108px;\n  max-height: 220px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-card {\n  margin: 0;\n  border: 1px solid #2a2833;\n  border-radius: 8px;\n  overflow: hidden;\n  background: #0e0d12;\n  cursor: default;\n  min-width: 0;\n}\n\n.az-card img,\n.az-card .az-ph {\n  display: block;\n  width: 100%;\n  height: 64px;\n  object-fit: contain;\n  background: #1a1820;\n  image-rendering: pixelated;\n}\n\n.az-card .az-ph {\n  display: grid;\n  place-items: center;\n  color: #5c5868;\n  font-size: 10px;\n}\n\n.az-card figcaption {\n  padding: 4px 5px 5px;\n  color: #b7b3c2;\n  font-size: 10px;\n  line-height: 1.3;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.az-layers {\n  min-height: 0;\n  overflow: auto;\n  padding: 8px 10px 12px;\n}\n\n.az-section-label {\n  margin: 0 0 6px;\n  font-size: 10px;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: #8b8698;\n}\n\n.az-layer {\n  display: grid;\n  grid-template-columns: auto 1fr auto;\n  gap: 8px;\n  align-items: baseline;\n  padding: 5px 6px;\n  border-radius: 6px;\n  color: #c8c4d0;\n  font-size: 12px;\n}\n\n.az-layer.is-on {\n  background: #221f2c;\n  color: #f4f1fa;\n}\n\n.az-layer code {\n  color: #f0c14b;\n  font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;\n}\n\n.az-layer span {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.az-layer em {\n  color: #8b8698;\n  font-style: normal;\n  font-size: 11px;\n}\n\n.az-foot {\n  display: flex;\n  justify-content: space-between;\n  gap: 10px;\n  padding: 8px 14px 10px;\n  border-top: 1px solid #2a2833;\n  color: #8b8698;\n  font-size: 11px;\n}\n\n.az-foot strong {\n  color: #c8c4d0;\n  font-weight: 600;\n}\n\n.az-empty {\n  margin: 28px 18px;\n  max-width: 36em;\n}\n\n.az-empty h2 {\n  margin: 0 0 8px;\n  font-size: 18px;\n  letter-spacing: -0.03em;\n  font-weight: 600;\n  color: #f4f1fa;\n}\n\n.az-empty p {\n  margin: 0;\n  color: #b7b3c2;\n}\n\n.az-quiet {\n  color: #8b8698;\n}\n\n.az-meta {\n  padding: 0 16px 10px;\n  color: #8b8698;\n  font-size: 11px;\n}\n";
+const PANE_CSS = "/* Dark mode is always on. Do not follow a light host theme. */\n.az-host {\n  height: 100%;\n  min-height: 0;\n  background: #0e0d12;\n  color: #e8e4f0;\n}\n\n.az {\n  box-sizing: border-box;\n  height: 100%;\n  min-height: 0;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n  gap: 0;\n  padding: 0;\n  font: 13px/1.45 ui-sans-serif, system-ui, sans-serif;\n  color: #e8e4f0;\n  background: #0e0d12;\n}\n\n.az *,\n.az *::before,\n.az *::after {\n  box-sizing: border-box;\n}\n\n.az-top {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n  padding: 12px 14px 10px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-brand {\n  display: flex;\n  gap: 10px;\n  min-width: 0;\n  align-items: center;\n}\n\n.az-mark {\n  width: 22px;\n  height: 22px;\n  flex: none;\n  border-radius: 6px;\n  border: 1.5px solid #f0c14b;\n  background:\n    linear-gradient(135deg, #2a2238 50%, transparent 50%),\n    #16151c;\n  position: relative;\n}\n\n.az-mark::after {\n  content: \"\";\n  position: absolute;\n  right: 4px;\n  bottom: 4px;\n  width: 7px;\n  height: 7px;\n  background: #f0c14b;\n  border-radius: 1px;\n}\n\n.az-kicker {\n  margin: 0;\n  font-size: 10px;\n  letter-spacing: 0.14em;\n  text-transform: uppercase;\n  color: #8b8698;\n}\n\n.az-title {\n  margin: 1px 0 0;\n  font-size: 16px;\n  font-weight: 600;\n  letter-spacing: -0.02em;\n  color: #f4f1fa;\n}\n\n.az-live {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  flex: none;\n  padding: 3px 9px;\n  border: 1px solid #2a2833;\n  border-radius: 999px;\n  color: #b7b3c2;\n  font-size: 11px;\n  background: #16151c;\n}\n\n.az-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 99px;\n  background: #5c5868;\n}\n\n.az-live.is-live .az-dot,\n.az-live.is-ready .az-dot {\n  background: #f0c14b;\n}\n\n.az-live.is-live .az-dot {\n  animation: az-pulse 1.4s ease-in-out infinite;\n}\n\n.az-live.is-offline .az-dot,\n.az-live.is-error .az-dot {\n  background: #e77888;\n}\n\n@keyframes az-pulse {\n  0%, 100% { opacity: 0.35; }\n  50% { opacity: 1; }\n}\n\n.az-body {\n  min-height: 0;\n  display: grid;\n  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.9fr);\n  gap: 0;\n}\n\n.az-stage {\n  min-width: 0;\n  min-height: 0;\n  display: flex;\n  flex-direction: column;\n  border-right: 1px solid #2a2833;\n  background: #121119;\n}\n\n.az-canvas {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  place-items: center;\n  overflow: auto;\n  padding: 16px;\n  background-color: #121119;\n  background-image:\n    linear-gradient(45deg, #1a1820 25%, transparent 25%),\n    linear-gradient(-45deg, #1a1820 25%, transparent 25%),\n    linear-gradient(45deg, transparent 75%, #1a1820 75%),\n    linear-gradient(-45deg, transparent 75%, #1a1820 75%);\n  background-size: 24px 24px;\n  background-position: 0 0, 0 12px, 12px -12px, -12px 0;\n}\n\n.az-canvas img,\n.az-fallback {\n  display: block;\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n  image-rendering: pixelated;\n  border: 1px solid #2a2833;\n  border-radius: 8px;\n  background: #0e0d12;\n}\n\n.az-fallback {\n  min-width: 220px;\n  min-height: 140px;\n  display: grid;\n  place-items: center;\n  padding: 18px;\n  color: #8b8698;\n  font-size: 12px;\n  text-align: center;\n  image-rendering: auto;\n}\n\n.az-side {\n  min-width: 0;\n  min-height: 0;\n  display: grid;\n  grid-template-rows: auto auto 1fr;\n  background: #14131a;\n  overflow: hidden;\n}\n\n.az-search {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  padding: 12px 12px 8px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-search input,\n.az-search select {\n  width: 100%;\n  border: 1px solid #2a2833;\n  background: #0e0d12;\n  color: #e8e4f0;\n  border-radius: 8px;\n  padding: 7px 9px;\n  font: inherit;\n  outline: none;\n}\n\n.az-search input:focus,\n.az-search select:focus {\n  border-color: #f0c14b;\n}\n\n.az-filters {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 6px;\n}\n\n.az-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));\n  gap: 6px;\n  padding: 8px 12px;\n  overflow: auto;\n  min-height: 108px;\n  max-height: 220px;\n  border-bottom: 1px solid #2a2833;\n}\n\n.az-card {\n  margin: 0;\n  border: 1px solid #2a2833;\n  border-radius: 8px;\n  overflow: hidden;\n  background: #0e0d12;\n  cursor: default;\n  min-width: 0;\n}\n\n.az-card img,\n.az-card .az-ph {\n  display: block;\n  width: 100%;\n  height: 64px;\n  object-fit: contain;\n  background: #1a1820;\n  image-rendering: pixelated;\n}\n\n.az-card .az-ph {\n  display: grid;\n  place-items: center;\n  color: #5c5868;\n  font-size: 10px;\n}\n\n.az-card figcaption {\n  padding: 4px 5px 5px;\n  color: #b7b3c2;\n  font-size: 10px;\n  line-height: 1.3;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.az-layers {\n  min-height: 0;\n  overflow: auto;\n  padding: 8px 10px 12px;\n}\n\n.az-section-label {\n  margin: 0 0 6px;\n  font-size: 10px;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: #8b8698;\n}\n\n.az-layer {\n  display: grid;\n  grid-template-columns: auto 1fr auto;\n  gap: 8px;\n  align-items: baseline;\n  padding: 5px 6px;\n  border-radius: 6px;\n  color: #c8c4d0;\n  font-size: 12px;\n}\n\n.az-layer.is-on {\n  background: #221f2c;\n  color: #f4f1fa;\n}\n\n.az-layer code {\n  color: #f0c14b;\n  font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;\n}\n\n.az-layer span {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.az-layer em {\n  color: #8b8698;\n  font-style: normal;\n  font-size: 11px;\n}\n\n.az-foot {\n  display: flex;\n  justify-content: space-between;\n  gap: 10px;\n  padding: 8px 14px 10px;\n  border-top: 1px solid #2a2833;\n  color: #8b8698;\n  font-size: 11px;\n}\n\n.az-foot strong {\n  color: #c8c4d0;\n  font-weight: 600;\n}\n\n.az-empty {\n  margin: 28px 18px;\n  max-width: 36em;\n}\n\n.az-empty h2 {\n  margin: 0 0 8px;\n  font-size: 18px;\n  letter-spacing: -0.03em;\n  font-weight: 600;\n  color: #f4f1fa;\n}\n\n.az-empty p {\n  margin: 0;\n  color: #b7b3c2;\n}\n\n.az-quiet {\n  color: #8b8698;\n}\n\n.az-meta {\n  padding: 0 16px 10px;\n  color: #8b8698;\n  font-size: 11px;\n}\n\n.az-lib {\n  padding: 10px 4px 4px;\n  border-top: 1px solid #2a2833;\n  display: grid;\n  gap: 8px;\n}\n\n.az-lib-summary {\n  margin: 0;\n  color: #c8c4d0;\n  font-size: 12px;\n}\n\n.az-packs {\n  display: grid;\n  gap: 4px;\n  max-height: 140px;\n  overflow: auto;\n  padding: 2px 0;\n}\n\n.az-pack {\n  display: flex;\n  align-items: flex-start;\n  gap: 8px;\n  color: #c8c4d0;\n  font-size: 11px;\n}\n\n.az-pack input {\n  margin-top: 2px;\n}\n\n.az-lib-actions,\n.az-lib-danger,\n.az-progress {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px;\n}\n\n.az-btn {\n  appearance: none;\n  border: 1px solid #3a3646;\n  background: #1b1922;\n  color: #f4f1fa;\n  border-radius: 6px;\n  padding: 6px 10px;\n  font: 12px/1.3 inherit;\n  cursor: pointer;\n}\n\n.az-btn:hover:not(:disabled) {\n  background: #25222e;\n}\n\n.az-btn:disabled {\n  opacity: 0.5;\n  cursor: default;\n}\n\n.az-btn-ghost {\n  background: transparent;\n}\n\n.az-btn-danger {\n  border-color: #6e3140;\n  background: #2a141a;\n  color: #ffd6dc;\n}\n\n.az-progress {\n  width: 100%;\n}\n\n.az-progress-bar {\n  width: 100%;\n  height: 6px;\n  background: #1f1d26;\n  border-radius: 99px;\n  overflow: hidden;\n}\n\n.az-progress-fill {\n  height: 100%;\n  background: #8b7cf7;\n  border-radius: 99px;\n}\n\n.az-warn {\n  margin: 0;\n  width: 100%;\n  color: #efc8ce;\n  font-size: 12px;\n}\n";
 
 /** Assetrizz compose view. No imports: the desktop bundle inlines this file. */
 
@@ -33,12 +33,12 @@ function mountPane(root, state, actions, css) {
     );
     return;
   }
-  if (model.libraryOk === false) {
+  if (model.catalogOk === false) {
     pane.appendChild(
       emptyBlock(
-        "Library not found",
+        "Catalog not found",
         model.message ||
-          "Point the Library path setting (or ASSETRIZZ_LIBRARY) at an assetrizz clone that has assets/ and db/assets.db.xz."
+          "The bundled catalog is missing. Reinstall the plugin/ directory, or point Library path at a checkout that has db/assets.db.xz."
       )
     );
     return;
@@ -98,6 +98,7 @@ function side(model, actions) {
   sideEl.appendChild(searchBox(model, actions));
   sideEl.appendChild(grid(model));
   sideEl.appendChild(layers(model));
+  sideEl.appendChild(libraryPanel(model, actions));
   return sideEl;
 }
 
@@ -219,17 +220,185 @@ function layers(model) {
 function footer(model) {
   const foot = el("div", "az-foot");
   const left = el("div");
-  left.innerHTML = model.library
-    ? "Library <strong></strong>"
-    : "Library path is not set";
-  if (model.library) left.querySelector("strong").textContent = model.library;
+  const lib = model.libraryInfo || {};
+  const mode = lib.asset_mode || model.assetMode || "on_demand";
+  if (model.library) {
+    left.appendChild(document.createTextNode(mode + " · "));
+    const strong = el("strong");
+    strong.textContent = String(model.library);
+    left.appendChild(strong);
+  } else {
+    left.textContent = mode + " · on-demand cache (no local library installed)";
+  }
   const right = el("div");
-  right.textContent = model.counts
-    ? Number(model.counts.total_ok || 0).toLocaleString() + " assets"
-    : "";
+  const disk = lib.disk || {};
+  const parts = [];
+  if (model.counts) parts.push(Number(model.counts.total_ok || 0).toLocaleString() + " assets");
+  if (disk.local_label && disk.local_bytes) parts.push("local " + disk.local_label);
+  if (disk.cache_label && disk.cache_bytes) parts.push("cache " + disk.cache_label);
+  right.textContent = parts.join(" · ");
   foot.appendChild(left);
   foot.appendChild(right);
   return foot;
+}
+
+function libraryPanel(model, actions) {
+  const wrap = el("div", "az-lib");
+  wrap.appendChild(el("p", "az-section-label", "Local library"));
+  const lib = model.libraryInfo || {};
+  const job = (lib.job && typeof lib.job === "object") ? lib.job : {};
+  const running = job.status === "running" || job.status === "starting";
+  const disk = lib.disk || {};
+
+  const summary = el("p", "az-lib-summary");
+  const mode = lib.asset_mode || model.assetMode || "on_demand";
+  let summaryText = "Mode: " + mode + ". Full library is " + (lib.total_label || "about 1.6 GB") + ".";
+  if (disk.local_bytes) summaryText += " Local copy uses " + disk.local_label + ".";
+  if (disk.cache_bytes) summaryText += " On-demand cache uses " + disk.cache_label + ".";
+  summary.textContent = summaryText;
+  wrap.appendChild(summary);
+
+  if (lib.local_library_dir) {
+    const dest = el("p", "az-quiet");
+    dest.textContent = "Download folder: " + String(lib.local_library_dir);
+    wrap.appendChild(dest);
+  }
+
+  const packs = Array.isArray(lib.packs) ? lib.packs : [];
+  const selected = model.selectedPacks && typeof model.selectedPacks === "object" ? model.selectedPacks : {};
+  const list = el("div", "az-packs");
+  packs.forEach(function (pack) {
+    if (!pack || !pack.name) return;
+    const row = el("label", "az-pack");
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.value = pack.name;
+    box.checked = selected[pack.name] === true;
+    box.disabled = running;
+    box.addEventListener("change", function () {
+      if (actions && typeof actions.onTogglePack === "function") {
+        actions.onTogglePack(pack.name, box.checked);
+      }
+    });
+    row.appendChild(box);
+    const meta = el("span");
+    const have = pack.downloaded ? " · " + pack.downloaded + "/" + pack.count + " on disk" : "";
+    meta.textContent = pack.name + " · " + (pack.label || "") + " · " + Number(pack.count || 0).toLocaleString() + " PNGs" + have;
+    row.appendChild(meta);
+    list.appendChild(row);
+  });
+  if (packs.length) wrap.appendChild(list);
+
+  const buttons = el("div", "az-lib-actions");
+  const downloadAll = el("button", "az-btn");
+  downloadAll.type = "button";
+  downloadAll.textContent = "Download library (" + (lib.total_label || "1.6 GB") + ")";
+  downloadAll.disabled = running;
+  downloadAll.addEventListener("click", function () {
+    if (actions && typeof actions.onDownload === "function") actions.onDownload(["*"]);
+  });
+  const downloadSel = el("button", "az-btn az-btn-ghost");
+  downloadSel.type = "button";
+  downloadSel.textContent = "Download selected packs";
+  downloadSel.disabled = running;
+  downloadSel.addEventListener("click", function () {
+    const names = [];
+    Object.keys(selected).forEach(function (name) {
+      if (selected[name]) names.push(name);
+    });
+    if (!names.length) return;
+    if (actions && typeof actions.onDownload === "function") actions.onDownload(names);
+  });
+  buttons.appendChild(downloadAll);
+  buttons.appendChild(downloadSel);
+  wrap.appendChild(buttons);
+
+  if (running || job.status === "done" || job.status === "cancelled" || job.status === "error") {
+    const progress = el("div", "az-progress");
+    const total = Number(job.total || 0);
+    const done = Number(job.done || 0);
+    const pct = total ? Math.min(100, Math.round((done / total) * 100)) : (running ? 0 : 100);
+    const bar = el("div", "az-progress-bar");
+    const fill = el("div", "az-progress-fill");
+    fill.style.width = String(pct) + "%";
+    bar.appendChild(fill);
+    progress.appendChild(bar);
+    const label = el("p", "az-quiet");
+    label.textContent = (job.message || job.status || "") + (total ? " (" + done + "/" + total + ")" : "");
+    progress.appendChild(label);
+    if (running) {
+      const cancel = el("button", "az-btn az-btn-ghost");
+      cancel.type = "button";
+      cancel.textContent = "Cancel";
+      cancel.addEventListener("click", function () {
+        if (actions && typeof actions.onCancel === "function") actions.onCancel();
+      });
+      progress.appendChild(cancel);
+    }
+    wrap.appendChild(progress);
+  }
+
+  const danger = el("div", "az-lib-danger");
+  if (model.removeConfirm) {
+    const warn = el("p", "az-warn");
+    warn.textContent = "Delete the local library at " + String(lib.local_library_dir || "the configured folder") + "? This cannot be undone. The source checkout will not be deleted.";
+    danger.appendChild(warn);
+    const confirm = el("button", "az-btn az-btn-danger");
+    confirm.type = "button";
+    confirm.textContent = "Confirm delete";
+    confirm.addEventListener("click", function () {
+      if (actions && typeof actions.onRemove === "function") actions.onRemove(true);
+    });
+    const abort = el("button", "az-btn az-btn-ghost");
+    abort.type = "button";
+    abort.textContent = "Keep library";
+    abort.addEventListener("click", function () {
+      if (actions && typeof actions.onRemove === "function") actions.onRemove(false);
+    });
+    danger.appendChild(confirm);
+    danger.appendChild(abort);
+  } else {
+    const remove = el("button", "az-btn az-btn-ghost");
+    remove.type = "button";
+    remove.textContent = "Remove local library";
+    remove.disabled = running || lib.can_remove === false;
+    remove.title = lib.remove_blocked_reason || "";
+    remove.addEventListener("click", function () {
+      if (actions && typeof actions.onAskRemove === "function") actions.onAskRemove();
+    });
+    danger.appendChild(remove);
+  }
+
+  if (model.cacheConfirm) {
+    const warn = el("p", "az-warn");
+    warn.textContent = "Clear the on-demand cache (" + ((lib.disk && lib.disk.cache_label) || "cached PNGs") + ")?";
+    danger.appendChild(warn);
+    const confirm = el("button", "az-btn az-btn-danger");
+    confirm.type = "button";
+    confirm.textContent = "Confirm clear cache";
+    confirm.addEventListener("click", function () {
+      if (actions && typeof actions.onClearCache === "function") actions.onClearCache(true);
+    });
+    const abort = el("button", "az-btn az-btn-ghost");
+    abort.type = "button";
+    abort.textContent = "Keep cache";
+    abort.addEventListener("click", function () {
+      if (actions && typeof actions.onClearCache === "function") actions.onClearCache(false);
+    });
+    danger.appendChild(confirm);
+    danger.appendChild(abort);
+  } else {
+    const clear = el("button", "az-btn az-btn-ghost");
+    clear.type = "button";
+    clear.textContent = "Clear on-demand cache";
+    clear.disabled = running || !(disk.cache_bytes);
+    clear.addEventListener("click", function () {
+      if (actions && typeof actions.onAskClearCache === "function") actions.onAskClearCache();
+    });
+    danger.appendChild(clear);
+  }
+  wrap.appendChild(danger);
+  return wrap;
 }
 
 function emptyBlock(title, copy) {
@@ -270,6 +439,9 @@ function ComposerPane() {
   const previewUrl = useRef("");
   const previewSha = useRef("");
   const queryRef = useRef({ q: "", style: "", category: "" });
+  const selectedPacksRef = useRef({});
+  const removeConfirmRef = useRef(false);
+  const cacheConfirmRef = useRef(false);
 
   useEffect(() => {
     let stopped = false;
@@ -288,13 +460,13 @@ function ComposerPane() {
       }
       return Promise.resolve(rest("/status"))
         .then((status) => {
-          const libraryOk = !status || status.library_ok !== false;
+          const catalogOk = !status || status.catalog_ok !== false;
           const current = status && status.current;
-          const sceneCall = libraryOk
+          const sceneCall = catalogOk
             ? Promise.resolve(rest(current ? "/scene?name=" + encodeURIComponent(current) : "/scene"))
             : Promise.resolve(null);
           const previewCall =
-            libraryOk && current
+            catalogOk && current
               ? Promise.resolve(
                   rest(
                     "/preview?name=" +
@@ -303,7 +475,7 @@ function ComposerPane() {
                   )
                 )
               : Promise.resolve(null);
-          const searchCall = libraryOk
+          const searchCall = catalogOk
             ? Promise.resolve(
                 rest(
                   "/search?" +
@@ -324,11 +496,12 @@ function ComposerPane() {
           const sceneBody = packed[1] || {};
           const preview = packed[2];
           const found = packed[3] || {};
-          if (status.library_ok === false) {
+          if (status.catalog_ok === false) {
             setModel({
               backend: "ready",
+              catalogOk: false,
               libraryOk: false,
-              message: status.library_error || status.fix || "Library path is not set.",
+              message: status.catalog_error || status.library_error || status.fix || "Bundled catalog is missing.",
             });
             return;
           }
@@ -345,9 +518,12 @@ function ComposerPane() {
           const styles = (stats.styles && Array.isArray(status.styles) ? status.styles : null) || styleNames(status);
           setModel({
             backend: "ready",
-            libraryOk: true,
+            catalogOk: true,
+            libraryOk: status.library_ok !== false,
             live: true,
             library: status.library || "",
+            assetMode: status.asset_mode || (status.library_status && status.library_status.asset_mode) || "on_demand",
+            libraryInfo: status.library_status || {},
             counts: stats,
             styles: styles,
             categories: categoryNames(status),
@@ -361,6 +537,9 @@ function ComposerPane() {
             query: queryRef.current.q,
             style: queryRef.current.style,
             category: queryRef.current.category,
+            selectedPacks: selectedPacksRef.current,
+            removeConfirm: removeConfirmRef.current,
+            cacheConfirm: cacheConfirmRef.current,
           });
           hydrateThumbs(items, rest, function () {
             if (stopped) return;
@@ -402,6 +581,73 @@ function ComposerPane() {
       rootRef.current,
       model,
       {
+        onTogglePack(name, checked) {
+          const next = Object.assign({}, selectedPacksRef.current);
+          if (checked) next[name] = true;
+          else delete next[name];
+          selectedPacksRef.current = next;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { selectedPacks: next });
+          });
+        },
+        onDownload(packs) {
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/download", { method: "POST", body: { packs: packs || ["*"] } })).then(function () {
+            removeConfirmRef.current = false;
+          });
+        },
+        onCancel() {
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/cancel", { method: "POST", body: {} }));
+        },
+        onAskRemove() {
+          removeConfirmRef.current = true;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { removeConfirm: true });
+          });
+        },
+        onRemove(confirm) {
+          if (!confirm) {
+            removeConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { removeConfirm: false });
+            });
+            return;
+          }
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/remove", { method: "POST", body: { confirm: true } })).then(function () {
+            removeConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { removeConfirm: false });
+            });
+          });
+        },
+        onAskClearCache() {
+          cacheConfirmRef.current = true;
+          setModel(function (prev) {
+            return Object.assign({}, prev || {}, { cacheConfirm: true });
+          });
+        },
+        onClearCache(confirm) {
+          if (!confirm) {
+            cacheConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { cacheConfirm: false });
+            });
+            return;
+          }
+          const rest = transport.rest;
+          if (typeof rest !== "function") return;
+          Promise.resolve(rest("/library/clear-cache", { method: "POST", body: { confirm: true } })).then(function () {
+            cacheConfirmRef.current = false;
+            setModel(function (prev) {
+              return Object.assign({}, prev || {}, { cacheConfirm: false });
+            });
+          });
+        },
         onSearch(q, style, category) {
           queryRef.current = { q: q || "", style: style || "", category: category || "" };
           const rest = transport.rest;

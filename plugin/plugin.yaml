@@ -1,17 +1,29 @@
 name: assetrizz
 version: "0.1.0"
 description: >-
-  Skill id assetrizz:assetrizz-composer. Search a local assetrizz 2D game-asset
-  library (FTS over slugs, tags, descriptions, styles, and categories) and
+  Skill id assetrizz:assetrizz-composer. Search the assetrizz 2D game-asset
+  catalog (FTS over slugs, tags, descriptions, styles, and categories) and
   compose scenes from those assets. Tools: assetrizz_search and assetrizz_scene.
-  The plugin reads PNG files and a SQLite catalog from a library path you
-  configure (a clone or download of mojomast/assetrizz); it does not bundle the
-  14,641 assets, does not call the network, and holds no credentials. The first
-  search may decompress db/assets.db.xz into the library or the plugin data dir.
-  Rendered scenes are written as PNG and JSON under the plugin data / export
-  directory. Hermes Desktop 0.23 or newer can show a dark compose pane that
-  live-previews the current scene through ctx.rest. The two tools still install
-  and run when that pane is unavailable. Install this plugin/ directory.
+  Catalog / Hermes install the plugin/ subdirectory only (a root install is
+  refused so the 1.65 GB PNG tree is never copied into the plugins folder).
+  A compressed catalog (db/assets.db.xz, about 4.7 MB, SHA-256 pinned) is
+  bundled so search works after a catalog install. Asset mode is one of
+  on_demand (default: fetch a single PNG from GitHub raw when you place,
+  render, or preview it), local (you download the full library or chosen
+  style packs once into a directory you pick), or offline (local files only,
+  no network). Bulk library downloads are user-initiated only — use the
+  Download library button in the Desktop pane (size estimate, progress,
+  cancel) or python -m assetrizz_plugin.cli; they are not a model tool.
+  Fetches go only to raw.githubusercontent.com/mojomast/assetrizz/<pinned
+  tag v0.1.0>/assets/…, use the Hermes SSRF guard, cap size, and verify
+  SHA-256 from the catalog. Optional library_path / ASSETRIZZ_LIBRARY still
+  prefers a complete checkout when you have one. Rendered scenes write PNG
+  and JSON under the plugin data directory and, if you set it, the Export
+  directory (must not be a filesystem root; never chosen by a tool argument).
+  No credentials, no subprocesses. Hermes Desktop 0.23 or newer can show a
+  dark compose pane that live-previews the current scene through ctx.rest
+  and lets you install or remove a local library (deletion needs confirmation).
+  The two tools still run when that pane is unavailable.
 author: mojomast
 license: MIT
 homepage: https://github.com/mojomast/assetrizz
@@ -28,20 +40,49 @@ provides_tools:
   - assetrizz_search
   - assetrizz_scene
 provides_hooks: []
-provides_middleware: []
 requires_env: []
 # Kept in step with pyproject.toml beside this file. That file is what
 # Hermes installs for dependencies.
 python_dependencies:
   - "pillow>=10,<14"
 config_schema:
+  asset_mode:
+    type: str
+    default: on_demand
+    choices:
+      - on_demand
+      - local
+      - offline
+    label: Asset mode
+    description: >-
+      on_demand (default) fetches a single pinned, SHA-256-verified PNG when
+      it is placed, rendered, or previewed, and caches it under the plugin
+      data directory. local uses a library you download yourself (pane button
+      or python -m assetrizz_plugin.cli). offline never touches the network
+      and requires the file to already be on disk.
+  asset_ref:
+    type: str
+    default: v0.1.0
+    label: Asset pin
+    description: >-
+      Git tag or 40-character commit used in on-demand and local-download
+      URLs. Leave at v0.1.0 for this plugin version.
+  local_library_dir:
+    type: str
+    default: ""
+    label: Local library directory
+    description: >-
+      Folder for a user-initiated library download. Must not be a filesystem
+      root. Defaults to the plugin data library/ directory. Removal from the
+      pane requires confirmation and will not delete the source checkout.
   library_path:
     type: str
     default: ""
     label: Library path
     description: >-
-      Path to an assetrizz checkout or download that contains assets/ and
-      db/assets.db.xz. Leave empty to auto-detect a checkout next to this plugin.
+      Optional path to a complete assetrizz checkout (assets/ plus
+      db/assets.db.xz). Leave empty to auto-detect a checkout next to this
+      plugin, or set to none to force the bundled catalog.
   export_dir:
     type: str
     default: ""

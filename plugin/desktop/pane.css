@@ -353,3 +353,100 @@
   color: #8b8698;
   font-size: 11px;
 }
+
+.az-lib {
+  padding: 10px 4px 4px;
+  border-top: 1px solid #2a2833;
+  display: grid;
+  gap: 8px;
+}
+
+.az-lib-summary {
+  margin: 0;
+  color: #c8c4d0;
+  font-size: 12px;
+}
+
+.az-packs {
+  display: grid;
+  gap: 4px;
+  max-height: 140px;
+  overflow: auto;
+  padding: 2px 0;
+}
+
+.az-pack {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #c8c4d0;
+  font-size: 11px;
+}
+
+.az-pack input {
+  margin-top: 2px;
+}
+
+.az-lib-actions,
+.az-lib-danger,
+.az-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.az-btn {
+  appearance: none;
+  border: 1px solid #3a3646;
+  background: #1b1922;
+  color: #f4f1fa;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font: 12px/1.3 inherit;
+  cursor: pointer;
+}
+
+.az-btn:hover:not(:disabled) {
+  background: #25222e;
+}
+
+.az-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.az-btn-ghost {
+  background: transparent;
+}
+
+.az-btn-danger {
+  border-color: #6e3140;
+  background: #2a141a;
+  color: #ffd6dc;
+}
+
+.az-progress {
+  width: 100%;
+}
+
+.az-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #1f1d26;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.az-progress-fill {
+  height: 100%;
+  background: #8b7cf7;
+  border-radius: 99px;
+}
+
+.az-warn {
+  margin: 0;
+  width: 100%;
+  color: #efc8ce;
+  font-size: 12px;
+}
