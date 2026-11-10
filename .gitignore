@@ -3,14 +3,22 @@
 *.db-*
 db/assets.db
 
-# Pipeline runtime / local working trees
-library/
-thumbs/
-raw/
-rejected/
-work/
-logs/
-backups/
+# Pipeline runtime / local working trees. Anchored so asset
+# subcategories such as assets/<style>/buildings/work/ stay trackable.
+/library/
+/thumbs/
+/raw/
+/rejected/
+/work/
+/logs/
+/backups/
+/pipeline/library/
+/pipeline/thumbs/
+/pipeline/raw/
+/pipeline/rejected/
+/pipeline/work/
+/pipeline/logs/
+/pipeline/backups/
 
 # Root-level generated exports (tracked copies live under assets/)
 /contact_sheets/
