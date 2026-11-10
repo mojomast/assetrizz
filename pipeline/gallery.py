@@ -33,6 +33,11 @@ CONNECT_TIMEOUT_S = 1.5
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8792
 PAGE_SIZE = 100
+CANONICAL_CATEGORIES = [
+    "icons", "tiles", "props", "characters", "enemies", "ui", "vfx", "backgrounds",
+    "vehicles", "buildings", "furniture", "foliage", "creatures", "portraits",
+    "weapons", "decals", "markers", "terrain",
+]
 MAX_LIMIT = 200
 
 LIST_FIELDS = (
@@ -256,12 +261,17 @@ def stats(qs: dict | None = None) -> dict:
             pack_ids = sorted(counts)
         extra = [s for s in sorted(counts) if s not in pack_ids]
         styles = [{"style_pack": s, "n": int(counts.get(s, 0))} for s in pack_ids + extra]
-        categories = [
-            {"category": r[0], "n": r[1]}
+        cat_counts = {
+            r[0]: r[1]
             for r in con.execute(
                 "SELECT category, COUNT(*) n FROM assets WHERE status='ok' "
-                "GROUP BY category ORDER BY category"
+                "GROUP BY category"
             )
+        }
+        extra_cats = [c for c in sorted(cat_counts) if c not in CANONICAL_CATEGORIES]
+        categories = [
+            {"category": c, "n": int(cat_counts.get(c, 0))}
+            for c in CANONICAL_CATEGORIES + extra_cats
         ]
         subcategories = [
             {"category": r[0], "subcategory": r[1], "n": r[2]}

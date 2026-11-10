@@ -26,6 +26,7 @@ from db import (
     sha_exists,
     snapshot_progress,
 )
+from build_specs import FEET_CATEGORIES
 from process import (
     contact_sheet,
     finish_sprite,
@@ -145,7 +146,7 @@ def process_batch(
         cell = cells[cell_i]
         target = (int(spec["target_w"]), int(spec["target_h"]))
         tileable = bool(spec["tileable"])
-        anchor = "feet" if spec["category"] in ("characters", "enemies", "props") else "center"
+        anchor = "feet" if spec["category"] in FEET_CATEGORIES else "center"
         finished = finish_sprite(
             cell,
             target=target,

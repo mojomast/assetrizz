@@ -52,6 +52,7 @@ Leases last 30 minutes and are reclaimed if a worker dies. Do not change `--shar
   work/shard-N/        per-worker staging (raw/, queue.jsonl, NEXT.md)
   build_specs.py       (re)build the queue if the DB has no batches yet
   append_styles.py     append new style packs to a live queue (does not touch existing rows)
+  append_categories.py append new categories to a live queue (does not touch existing rows)
   worker.py            claim + ingest entry point
   ingest.py            ingest only
   query.py             CLI search
@@ -83,9 +84,9 @@ Each pack locks a `style_prefix`, palette, light direction, and chroma key (`#FF
 
 ## Categories
 
-icons (weapons, armor, potions, food, tools, valuables, misc) · tiles (floor/wall, tileable) · props · characters (2×2 turnarounds) · enemies · ui · vfx (4-frame sheets) · backgrounds (16:9 plates + parallax layers)
+icons (weapons, armor, potions, food, tools, valuables, misc) · tiles (floor/wall, tileable) · props · characters (2×2 turnarounds) · enemies · ui · vfx (4-frame sheets) · backgrounds (16:9 plates + parallax layers) · vehicles (mounts and craft) · buildings (exteriors) · furniture · foliage (plants and trees) · creatures (non-hostile animals) · portraits (original busts, no real people) · weapons (full-size sprites, not icons) · decals (blood-free stains and prints) · markers (map and world-map pins) · terrain (rocks, cliffs, bridges)
 
-Sheets (4×4 icons/UI/props/enemies, 2×2 turnarounds and VFX) are generated as one image and sliced. Tiles and backgrounds are singles.
+Sheets (4×4 for small items, 2×2 for larger ones, turnarounds and VFX) are generated as one image and sliced. Tiles, backgrounds, buildings, trees and other large singles stay singles.
 
 ## Query
 

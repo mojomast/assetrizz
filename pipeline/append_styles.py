@@ -431,11 +431,11 @@ def assign_queue_pos(batches: list[dict], start_pos: int) -> None:
         it["batch"]["queue_pos"] = start_pos + i
 
 
-def backup_db(src: Path) -> Path:
+def backup_db(src: Path, label: str = "wave2") -> Path:
     backup_dir = ROOT / "backups"
     backup_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y-%m-%dT%H%M%S")
-    dest = backup_dir / f"assets.db.bak-wave2-{stamp}"
+    dest = backup_dir / f"assets.db.bak-{label}-{stamp}"
     source = connect(src)
     dest_conn = connect(dest)
     try:

@@ -137,8 +137,21 @@ def subject_label(slug: str) -> str:
     return slug.replace("_", " ")
 
 
+FEET_CATEGORIES = {
+    "characters", "enemies", "props",
+    "vehicles", "buildings", "furniture", "foliage", "creatures",
+    "weapons", "terrain",
+}
+
+CANONICAL_CATEGORIES = [
+    "icons", "tiles", "props", "characters", "enemies", "ui", "vfx", "backgrounds",
+    "vehicles", "buildings", "furniture", "foliage", "creatures", "portraits",
+    "weapons", "decals", "markers", "terrain",
+]
+
+
 def pivot_for(category: str) -> tuple[float, float]:
-    if category in ("characters", "enemies", "props"):
+    if category in FEET_CATEGORIES:
         return (0.5, 1.0)
     return (0.5, 0.5)
 
@@ -146,12 +159,26 @@ def pivot_for(category: str) -> tuple[float, float]:
 def perspective_for(pack: dict, category: str) -> str:
     if category in ("tiles",):
         return "orthographic top-down"
-    if category in ("ui", "icons"):
+    if category in ("ui", "icons", "markers"):
         return "orthographic front view, facing camera"
+    if category == "decals":
+        return "orthographic top-down or front-on as a flat decal, facing camera"
+    if category == "portraits":
+        return "front-facing bust portrait, head and shoulders, facing camera"
     if category in ("backgrounds",):
         return "wide scenic view, no UI, no watermark"
-    if category in ("characters", "enemies"):
+    if category in ("characters", "enemies", "creatures"):
         return "side-view full body" if pack.get("pixel") else "full-body three-quarter view"
+    if category in ("buildings", "terrain"):
+        return "three-quarter exterior view, full structure visible, no interior cutaway"
+    if category == "vehicles":
+        return "three-quarter view, full vehicle or mount visible, wheels or feet toward the bottom"
+    if category == "weapons":
+        return "three-quarter view, full-size weapon, complete silhouette"
+    if category == "foliage":
+        return "three-quarter view, full plant visible, roots or pot at the bottom"
+    if category == "furniture":
+        return "three-quarter view, full piece visible, feet toward the bottom"
     return pack.get("perspective", "three-quarter view")
 
 
@@ -203,6 +230,26 @@ def tags_for(category, subcategory, subject, variant, style, w, h, tileable) -> 
         tags += ["vfx", "fx", "effect"]
     if category == "backgrounds":
         tags += ["background", "scene"]
+    if category == "vehicles":
+        tags += ["vehicle", "mount", "transport"]
+    if category == "buildings":
+        tags += ["building", "structure", "exterior"]
+    if category == "furniture":
+        tags += ["furniture", "interior", "decor"]
+    if category == "foliage":
+        tags += ["foliage", "plant", "tree"]
+    if category == "creatures":
+        tags += ["creature", "animal", "pet", "critter", "sprite"]
+    if category == "portraits":
+        tags += ["portrait", "bust", "npc"]
+    if category == "weapons":
+        tags += ["weapon", "sprite", "full-size"]
+    if category == "decals":
+        tags += ["decal", "overlay", "stain"]
+    if category == "markers":
+        tags += ["marker", "map", "minimap", "waypoint"]
+    if category == "terrain":
+        tags += ["terrain", "landmark", "feature"]
     # unique, singular-ish, stable order
     seen, out = set(), []
     for t in tags:

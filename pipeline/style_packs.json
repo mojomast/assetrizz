@@ -57,6 +57,46 @@
       "backgrounds": [
         256,
         144
+      ],
+      "vehicles": [
+        48,
+        32
+      ],
+      "buildings": [
+        64,
+        64
+      ],
+      "furniture": [
+        32,
+        32
+      ],
+      "foliage": [
+        32,
+        48
+      ],
+      "creatures": [
+        32,
+        32
+      ],
+      "portraits": [
+        32,
+        32
+      ],
+      "weapons": [
+        32,
+        48
+      ],
+      "decals": [
+        32,
+        32
+      ],
+      "markers": [
+        32,
+        32
+      ],
+      "terrain": [
+        64,
+        64
       ]
     },
     "style_prefix": "16-bit SNES-era pixel art game asset, crisp square pixels, 1-pixel dark outline, no anti-aliasing, no blur, no gradients, limited 16-color palette #140C1C #442434 #30346D #4E4A4E #854C30 #346524 #D04648 #757161 #597DCE #D27D2C #8595A1 #6DAA2C #D2AA99 #6DC2CA #DAD45E #DEEED6, lighting from the top left, one highlight and one shadow per color, centered subject, flat solid magenta background #FF00FF, no drop shadow, no floor, no ground plane, no text, original design not from any existing game",
@@ -136,6 +176,46 @@
       "backgrounds": [
         384,
         216
+      ],
+      "vehicles": [
+        96,
+        64
+      ],
+      "buildings": [
+        128,
+        128
+      ],
+      "furniture": [
+        64,
+        64
+      ],
+      "foliage": [
+        64,
+        96
+      ],
+      "creatures": [
+        64,
+        64
+      ],
+      "portraits": [
+        64,
+        64
+      ],
+      "weapons": [
+        64,
+        96
+      ],
+      "decals": [
+        64,
+        64
+      ],
+      "markers": [
+        64,
+        64
+      ],
+      "terrain": [
+        128,
+        128
       ]
     },
     "style_prefix": "32-pixel-grid pixel art game asset, crisp square pixels, 1-pixel dark outline, no anti-aliasing, no blur, limited 32-color DawnBringer-style palette, lighting from the top left, clean clusters of pixels, centered subject, flat solid magenta background #FF00FF, no drop shadow, no floor, no text, original design not from any existing game",
@@ -199,6 +279,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "hand-painted fantasy game art, oil-painted texture, saturated but controlled colors, readable silhouette, warm light from the top left, slightly weathered materials, centered subject filling most of the frame, flat solid magenta background #FF00FF, no drop shadow under the subject, no photorealism, no text, original fantasy design not from any existing game or artist",
@@ -258,6 +378,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "flat vector game UI asset, clean geometric shapes, even color fills, consistent rounded corners, subtle 2px dark stroke, no gradients except a single soft top highlight, no texture noise, no skeuomorphism, centered subject, flat solid magenta background #FF00FF, no drop shadow, no text unless the subject is a blank button shape, original design",
@@ -316,6 +476,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "low-poly 3D rendered game asset, faceted geometry, clean PBR-like materials, soft studio lighting, gentle ambient occlusion, no subdivision smoothness, centered subject, flat solid magenta background #FF00FF, no ground plane visible, no photorealism, no text, original design not from any existing game",
@@ -375,6 +575,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "dark sci-fi game asset, matte black and gunmetal surfaces, restrained cyan and violet neon accents, subtle panel lines, cool rim light, centered subject, flat solid magenta background #FF00FF, no floor, no photoreal cinematic fog, no text, no logos, original design not from any existing franchise",
@@ -434,6 +674,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "cozy cartoon game asset, warm cottagecore colors, soft rounded shapes, gentle 3px dark-brown outline, simple cute shading, afternoon light from the top left, centered subject, flat solid magenta background #FF00FF, no floor, no text, wholesome original design, not a copyrighted character",
@@ -497,6 +777,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "sumi-e ink-and-watercolor game asset, original ink-wash design not copied from any artist, bold black calligraphic brush strokes, soft mineral watercolor blooms in indigo, vermillion and moss, visible cold-press paper tooth only on the subject itself, limited muted palette, spare uncluttered composition, not an oil painting, centered subject, flat solid magenta background #FF00FF, no paper sheet behind the subject, no drop shadow, no floor, no ground plane, no text, original design not from any existing game or artist",
@@ -560,6 +880,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "layered paper-cutout craft game asset, stacked sheets of colored construction paper, visible layer thickness and slight offset between layers, matte paper fiber texture, clean scissor-cut silhouettes, handmade but tidy, no photorealism, no plastic 3D render, centered subject, flat solid magenta background #FF00FF, no floor, no table, no drop shadow on the backdrop, no text, original design not from any existing craft kit, book or game",
@@ -623,6 +983,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "claymation stop-motion game asset, soft matte plasticine clay with subtle fingerprints and tool marks, slightly imperfect handmade volumes, gentle studio light from the top left, no greasy shine, no smooth CGI, centered subject, flat solid magenta background #FF00FF, no ground plane, no animation set, no text, original design, not a character from any existing film, show or game",
@@ -686,6 +1086,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "cel-shaded anime-inspired game asset, generic original design only, thin clean even black outline, hard-edged color holds, two or three discrete shade steps, simple shiny highlight marks, no photorealism, no film grain, no trademarked character, not from any existing anime, manga, film or game, not in the style of a named studio or series, centered subject, flat solid magenta background #FF00FF, no floor, no text, original design",
@@ -737,6 +1177,46 @@
       "backgrounds": [
         256,
         144
+      ],
+      "vehicles": [
+        48,
+        32
+      ],
+      "buildings": [
+        64,
+        64
+      ],
+      "furniture": [
+        32,
+        32
+      ],
+      "foliage": [
+        32,
+        48
+      ],
+      "creatures": [
+        32,
+        32
+      ],
+      "portraits": [
+        32,
+        32
+      ],
+      "weapons": [
+        32,
+        48
+      ],
+      "decals": [
+        32,
+        32
+      ],
+      "markers": [
+        32,
+        32
+      ],
+      "terrain": [
+        64,
+        64
       ]
     },
     "style_prefix": "generic 8-bit console pixel art game asset, only four colors, chunky clustered square pixels, no anti-aliasing, no blur, no gradients, no dither beyond simple 2-pixel checker if needed, limited 4-color palette #1B0326 #F2E6C8 #C43C3C #2E8B6A, lighting from the top left suggested only by those four colors, centered subject, flat solid magenta background #FF00FF used only as a backdrop key and not as a sprite color, no drop shadow, no floor, no ground plane, no text, original design not from any existing game or console library",
@@ -800,6 +1280,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "vaporwave synth game asset, retro-futurist 1980s-inspired original design, chrome highlights, sunset peach and electric cyan, hot pink #FF4AD8 that is clearly not pure magenta, deep purple shadows, optional soft gradient on the object only, no photoreal person, centered subject, flat solid magenta background #FF00FF used only as a backdrop key, the subject itself must contain no pure #FF00FF pixels, no floor grid unless this is a background plate, no text, no logos, no album art pastiche of a real artist, original design not from any existing franchise",
@@ -859,6 +1379,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "gothic woodcut engraving game asset, dense black ink hatch and cross-hatch lines as in a medieval wood-block print, cream paper tones only inside the subject, high-contrast carved look, no soft airbrush, no full-color painting, centered subject, flat solid magenta background #FF00FF, no floor, no typography, no page or book around the subject, original design not from any existing book, print or game",
@@ -922,6 +1482,46 @@
       "backgrounds": [
         1280,
         720
+      ],
+      "vehicles": [
+        512,
+        384
+      ],
+      "buildings": [
+        768,
+        768
+      ],
+      "furniture": [
+        384,
+        384
+      ],
+      "foliage": [
+        512,
+        768
+      ],
+      "creatures": [
+        512,
+        512
+      ],
+      "portraits": [
+        512,
+        512
+      ],
+      "weapons": [
+        512,
+        768
+      ],
+      "decals": [
+        256,
+        256
+      ],
+      "markers": [
+        256,
+        256
+      ],
+      "terrain": [
+        768,
+        768
       ]
     },
     "style_prefix": "isometric voxel game asset, chunky cubic voxels, clean 30-degree isometric camera showing the top and two sides, soft ambient occlusion in the cracks, limited flat colors per block, no smooth subdivision, no photorealism, centered subject, flat solid magenta background #FF00FF, no ground plane, no text, original design, not from any existing voxel sandbox, toy or game",
